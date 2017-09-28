@@ -3,12 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>id.co.telkomsigma.etc.cbo</groupId>
-        <artifactId>root-cbo</artifactId>
+        <artifactId>root-cbo-ms</artifactId>
         <version>1.0.0</version>
     </parent>
     <artifactId>cbo-data</artifactId>
     <packaging>jar</packaging>
     <name>cbo-data</name>
+
     <description>Data Component for ETC CBO Project</description>
     
     <organization>
@@ -29,9 +30,11 @@
         </developer>
     </developers>
 
-<!--    <dependencies>
+    <dependencies>
         <dependency>
-            
+            <groupId>id.co.telkomsigma.tmf</groupId>
+            <artifactId>tmf-data</artifactId>
+            <version>${tmf.data.version}</version>
         </dependency>
-    </dependencies>-->
+    </dependencies>
 </project>

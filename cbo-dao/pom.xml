@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>id.co.telkomsigma.etc.cbo</groupId>
-        <artifactId>root-cbo</artifactId>
+        <artifactId>root-cbo-ms</artifactId>
         <version>1.0.0</version>
     </parent>
     <artifactId>cbo-dao</artifactId>
@@ -29,4 +29,18 @@
             <timezone>+7</timezone>
         </developer>
     </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>id.co.telkomsigma.tmf</groupId>
+            <artifactId>tmf-dao</artifactId>
+            <version>${tmf.dao.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>id.co.telkomsigma.etc.cbo</groupId>
+            <artifactId>cbo-data</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 </project>

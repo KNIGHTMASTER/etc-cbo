@@ -2,11 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>id.co.telkomsigma.etc.cbo</groupId>
-    <artifactId>root-cbo</artifactId>
+    <artifactId>root-cbo-ms</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
-    
-    <name>root-cbo</name>
+
+    <parent>
+        <groupId>id.co.telkomsigma.tmf</groupId>
+        <artifactId>tmf</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <name>root-cbo-ms</name>
     <description>Project E-Toll Commercial - Commercial Back Office</description>
     
     <organization>
@@ -27,15 +33,19 @@
         </developer>
     </developers>
 
-
     <modules>
         <module>cbo-data</module>
         <module>cbo-dao</module>
+        <module>cbo-transaction</module>
+        <module>cbo-billing</module>
     </modules>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <tmf.data.version>1.0.0</tmf.data.version>
+        <tmf.dao.version>1.0.0</tmf.dao.version>
+        <tmf.security.namagement.integration.version>1.0.0</tmf.security.namagement.integration.version>
     </properties>
 </project>
