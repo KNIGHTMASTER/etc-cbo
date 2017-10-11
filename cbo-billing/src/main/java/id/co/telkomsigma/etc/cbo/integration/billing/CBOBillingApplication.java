@@ -1,4 +1,4 @@
-package id.co.telkomsigma.etc.cbo.integration.transaction;
+package id.co.telkomsigma.etc.cbo.integration.billing;
 
 import id.co.telkomsigma.etc.cbo.data.CBOConstant.PackageScanner.Cbo;
 import id.co.telkomsigma.etc.cbo.data.CBOConstant.PackageScanner.Tmf;
@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
@@ -20,14 +19,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableAutoConfiguration
 @EntityScan({Tmf.ENTITY_TMF, Cbo.ENTITY_CBO})
 @EnableJpaRepositories({Tmf.DAO_TMF, Cbo.DAO_CBO})
-@EnableJpaAuditing
-public class CBOTransactionApplication {
+public class CBOBillingApplication {
 
     public static void main(String [] args){
-        SpringApplication.run(CBOTransactionApplication.class, args);
+        SpringApplication.run(CBOBillingApplication.class, args);
     }
-
-
-
-
 }

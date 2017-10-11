@@ -1,248 +1,84 @@
-package id.co.telkomsigma.etc.cbo.data;
+package id.co.telkomsigma.etc.cbo.data.dto;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created on 9/28/17.
+ * Created on 10/3/17.
  *
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
-@Entity
-@Table(name = "t_event_input", schema = "bill")
-public class EventInput {
+public class EventInputDTO implements Serializable {
+    /**
+     *
+     *
+     */
+    private static final long serialVersionUID = -1713524303793105903L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "input_data_control_id")
-    private Long inputDataControlId;
-
-    @Column(name = "job_control_id")
-    private Long jobControlId;
-
-    @Column(name = "event_type_id")
-    private Integer eventTypeId;
-
-    @Column(name = "wallet_id")
-    private String walletId;
-
-    @Column(name = "obu_id")
+    private String eventTypeId;
     private String obuId;
-
-    @Column(name = "trx_refference_code")
-    private String trxRefferenceCode;
-
-    @Column(name = "trx_amount")
-    private BigDecimal trxAmount;
-
-    @Column(name = "dr_cr")
-    private String drcr;
-
-    @Column(name = "event_begin_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date eventBeginTime;
-
-    @Column(name = "event_end_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date eventEndTime;
-
-    @Column(name = "gate_code")
-    private String gateCode;
-
-    @Column(name = "plaza_code")
+    private String trxAmount;
+    private String eventBeginTime;
     private String plazaCode;
-
-    @Column(name = "operator_code")
-    private String operatorCode;
-
-    @Column(name = "processing_date")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date processingDate;
-
-    @Column(name = "station_type")
+    private String processingDate; //new Date
     private String stationType;
-
-    @Column(name = "lane")
     private String lane;
-
-    @Column(name = "direction")
     private String direction;
-
-    @Column(name = "dst")
     private String dst;
-
-    @Column(name = "signaling_code")
     private String signalingCode;
-
-    @Column(name = "manufactureid")
     private String manufactureId;
-
-    @Column(name = "obu_status")
     private String obuStatus;
-
-    @Column(name = "signaling_level")
     private String signalingLevel;
-
-    @Column(name = "log_index")
     private String logIndex;
-
-    @Column(name = "return_flag")
     private String returnFlag;
-
-    @Column(name = "pricecurrency")
     private String priceCurrency;
-
-    @Column(name = "vehicleclass")
     private String vehicleClass;
-
-    @Column(name = "seqvalidpayment")
     private String seqValidPayment;
-
-    @Column(name = "seqdetection")
     private String seqDetection;
-
-    @Column(name = "seqenforced")
     private String seqEnforce;
-
-    @Column(name = "seqlctransaction")
     private String seqLcTransaction;
-
-    @Column(name = "seqvideopicture")
     private String seqVideoPicture;
-
-    @Column(name = "signalcodebitmap")
     private String signalCodeBitmap;
-
-    @Column(name = "lanemode")
     private String laneMode;
-
-    @Column(name = "lightsignalcode")
     private String lightSignalCode;
-
-    @Column(name = "exitavc")
     private String exitAvc;
-
-    @Column(name = "exitavcaxles")
     private String exitAvcAxles;
-
-    @Column(name = "exitavcwheels")
     private String exitAvcWheels;
-
-    @Column(name = "exitavcsensors")
     private String exitAvcSensors;
-
-    @Column(name = "pan")
     private String pan;
-
-    @Column(name = "expirydate")
     private String expiryDate;
-
-    @Column(name = "usagecontrol")
     private String usageControl;
-
-    @Column(name = "efccm_country")
     private String efccmCountry;
-
-    @Column(name = "efccm_issuer")
     private String efccmIssuer;
-
-    @Column(name = "efccm_typeofcontr_act")
     private String efccmTypeOfContract;
-
-    @Column(name = "efccm_contextversi_on")
     private String efccmContextVersion;
-
-    @Column(name = "rd_sessiontime")
     private String rdSessionTime;
-
-    @Column(name = "rd_sessioncountry")
     private String rdSessionCountry;
-
-    @Column(name = "rd_sessionissuer")
     private String rdSessionIssuer;
-
-    @Column(name = "rd_sessionplaza")
     private String rdSessionPlaza;
-
-    @Column(name = "rd_sessionlane")
     private String rdSessionLane;
-
-    @Column(name = "rd_sessionstationty_pe")
     private String rdSessionStationType;
-
-    @Column(name = "rndrse")
     private String rndRse;
-
-    @Column(name = "keyref")
     private String keyRef;
-
-    @Column(name = "obuauthenticator")
     private String obuAuthenticator;
-
-    @Column(name = "picturefilename")
     private String pictureFileName;
-
-    @Column(name = "is_hit")
     private String isHit;
-
-    @Column(name = "hit_counter")
-    private Double hitCounter;
-
-    @Column(name = "timestamp_tr")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeStampTr;
-
-    @Column(name = "lasthittimestamp")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastHitTimeStamp;
-
-    @Column(name = "shift")
+    private String hitCounter;
+    private String timeStampTr;
+    private String lastHitTimeStamp;
     private String shift;
-
-    @Column(name = "shift_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private String shitDate;
-
-    @Column(name = "balance")
-    private BigDecimal balance;
-
-    @Column(name = "uuid_input")
+    private String balance;
     private String uuidInput;
-
-    @Column(name = "is_respon")
     private String isRespon;
+    private Date timestampLog;
 
-    public Long getInputDataControlId() {
-        return inputDataControlId;
+    public Date getTimestampLog() {
+        return timestampLog;
     }
 
-    public void setInputDataControlId(Long inputDataControlId) {
-        this.inputDataControlId = inputDataControlId;
-    }
-
-    public Long getJobControlId() {
-        return jobControlId;
-    }
-
-    public void setJobControlId(Long jobControlId) {
-        this.jobControlId = jobControlId;
-    }
-
-    public Integer getEventTypeId() {
-        return eventTypeId;
-    }
-
-    public void setEventTypeId(Integer eventTypeId) {
-        this.eventTypeId = eventTypeId;
-    }
-
-    public String getWalletId() {
-        return walletId;
-    }
-
-    public void setWalletId(String walletId) {
-        this.walletId = walletId;
+    public void setTimestampLog(Date timestampLog) {
+        this.timestampLog = timestampLog;
     }
 
     public String getObuId() {
@@ -253,76 +89,12 @@ public class EventInput {
         this.obuId = obuId;
     }
 
-    public String getTrxRefferenceCode() {
-        return trxRefferenceCode;
-    }
-
-    public void setTrxRefferenceCode(String trxRefferenceCode) {
-        this.trxRefferenceCode = trxRefferenceCode;
-    }
-
-    public BigDecimal getTrxAmount() {
-        return trxAmount;
-    }
-
-    public void setTrxAmount(BigDecimal trxAmount) {
-        this.trxAmount = trxAmount;
-    }
-
-    public String getDrcr() {
-        return drcr;
-    }
-
-    public void setDrcr(String drcr) {
-        this.drcr = drcr;
-    }
-
-    public Date getEventBeginTime() {
-        return eventBeginTime;
-    }
-
-    public void setEventBeginTime(Date eventBeginTime) {
-        this.eventBeginTime = eventBeginTime;
-    }
-
-    public Date getEventEndTime() {
-        return eventEndTime;
-    }
-
-    public void setEventEndTime(Date eventEndTime) {
-        this.eventEndTime = eventEndTime;
-    }
-
-    public String getGateCode() {
-        return gateCode;
-    }
-
-    public void setGateCode(String gateCode) {
-        this.gateCode = gateCode;
-    }
-
     public String getPlazaCode() {
         return plazaCode;
     }
 
     public void setPlazaCode(String plazaCode) {
         this.plazaCode = plazaCode;
-    }
-
-    public String getOperatorCode() {
-        return operatorCode;
-    }
-
-    public void setOperatorCode(String operatorCode) {
-        this.operatorCode = operatorCode;
-    }
-
-    public Date getProcessingDate() {
-        return processingDate;
-    }
-
-    public void setProcessingDate(Date processingDate) {
-        this.processingDate = processingDate;
     }
 
     public String getStationType() {
@@ -661,52 +433,12 @@ public class EventInput {
         this.isHit = isHit;
     }
 
-    public Double getHitCounter() {
-        return hitCounter;
-    }
-
-    public void setHitCounter(Double hitCounter) {
-        this.hitCounter = hitCounter;
-    }
-
-    public Date getTimeStampTr() {
-        return timeStampTr;
-    }
-
-    public void setTimeStampTr(Date timeStampTr) {
-        this.timeStampTr = timeStampTr;
-    }
-
-    public Date getLastHitTimeStamp() {
-        return lastHitTimeStamp;
-    }
-
-    public void setLastHitTimeStamp(Date lastHitTimeStamp) {
-        this.lastHitTimeStamp = lastHitTimeStamp;
-    }
-
     public String getShift() {
         return shift;
     }
 
     public void setShift(String shift) {
         this.shift = shift;
-    }
-
-    public String getShitDate() {
-        return shitDate;
-    }
-
-    public void setShitDate(String shitDate) {
-        this.shitDate = shitDate;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
     }
 
     public String getUuidInput() {
@@ -723,5 +455,139 @@ public class EventInput {
 
     public void setIsRespon(String isRespon) {
         this.isRespon = isRespon;
+    }
+
+    public String getEventTypeId() {
+        return eventTypeId;
+    }
+
+    public void setEventTypeId(String eventTypeId) {
+        this.eventTypeId = eventTypeId;
+    }
+
+    public String getTrxAmount() {
+        return trxAmount;
+    }
+
+    public void setTrxAmount(String trxAmount) {
+        this.trxAmount = trxAmount;
+    }
+
+    public String getEventBeginTime() {
+        return eventBeginTime;
+    }
+
+    public void setEventBeginTime(String eventBeginTime) {
+        this.eventBeginTime = eventBeginTime;
+    }
+
+    public String getProcessingDate() {
+        return processingDate;
+    }
+
+    public void setProcessingDate(String processingDate) {
+        this.processingDate = processingDate;
+    }
+
+    public String getHitCounter() {
+        return hitCounter;
+    }
+
+    public void setHitCounter(String hitCounter) {
+        this.hitCounter = hitCounter;
+    }
+
+    public String getTimeStampTr() {
+        return timeStampTr;
+    }
+
+    public void setTimeStampTr(String timeStampTr) {
+        this.timeStampTr = timeStampTr;
+    }
+
+    public String getLastHitTimeStamp() {
+        return lastHitTimeStamp;
+    }
+
+    public void setLastHitTimeStamp(String lastHitTimeStamp) {
+        this.lastHitTimeStamp = lastHitTimeStamp;
+    }
+
+    public String getShitDate() {
+        return shitDate;
+    }
+
+    public void setShitDate(String shitDate) {
+        this.shitDate = shitDate;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "EventInputDTO{" +
+                "eventTypeId=" + eventTypeId +
+                ", obuId='" + obuId + '\'' +
+                ", trxAmount=" + trxAmount +
+                ", eventBeginTime=" + eventBeginTime +
+                ", plazaCode='" + plazaCode + '\'' +
+                ", processingDate=" + processingDate +
+                ", stationType='" + stationType + '\'' +
+                ", lane='" + lane + '\'' +
+                ", direction='" + direction + '\'' +
+                ", dst='" + dst + '\'' +
+                ", signalingCode='" + signalingCode + '\'' +
+                ", manufactureId='" + manufactureId + '\'' +
+                ", obuStatus='" + obuStatus + '\'' +
+                ", signalingLevel='" + signalingLevel + '\'' +
+                ", logIndex='" + logIndex + '\'' +
+                ", returnFlag='" + returnFlag + '\'' +
+                ", priceCurrency='" + priceCurrency + '\'' +
+                ", vehicleClass='" + vehicleClass + '\'' +
+                ", seqValidPayment='" + seqValidPayment + '\'' +
+                ", seqDetection='" + seqDetection + '\'' +
+                ", seqEnforce='" + seqEnforce + '\'' +
+                ", seqLcTransaction='" + seqLcTransaction + '\'' +
+                ", seqVideoPicture='" + seqVideoPicture + '\'' +
+                ", signalCodeBitmap='" + signalCodeBitmap + '\'' +
+                ", laneMode='" + laneMode + '\'' +
+                ", lightSignalCode='" + lightSignalCode + '\'' +
+                ", exitAvc='" + exitAvc + '\'' +
+                ", exitAvcAxles='" + exitAvcAxles + '\'' +
+                ", exitAvcWheels='" + exitAvcWheels + '\'' +
+                ", exitAvcSensors='" + exitAvcSensors + '\'' +
+                ", pan='" + pan + '\'' +
+                ", expiryDate='" + expiryDate + '\'' +
+                ", usageControl='" + usageControl + '\'' +
+                ", efccmCountry='" + efccmCountry + '\'' +
+                ", efccmIssuer='" + efccmIssuer + '\'' +
+                ", efccmTypeOfContract='" + efccmTypeOfContract + '\'' +
+                ", efccmContextVersion='" + efccmContextVersion + '\'' +
+                ", rdSessionTime='" + rdSessionTime + '\'' +
+                ", rdSessionCountry='" + rdSessionCountry + '\'' +
+                ", rdSessionIssuer='" + rdSessionIssuer + '\'' +
+                ", rdSessionPlaza='" + rdSessionPlaza + '\'' +
+                ", rdSessionLane='" + rdSessionLane + '\'' +
+                ", rdSessionStationType='" + rdSessionStationType + '\'' +
+                ", rndRse='" + rndRse + '\'' +
+                ", keyRef='" + keyRef + '\'' +
+                ", obuAuthenticator='" + obuAuthenticator + '\'' +
+                ", pictureFileName='" + pictureFileName + '\'' +
+                ", isHit='" + isHit + '\'' +
+                ", hitCounter=" + hitCounter +
+                ", timeStampTr=" + timeStampTr +
+                ", lastHitTimeStamp=" + lastHitTimeStamp +
+                ", shift='" + shift + '\'' +
+                ", shitDate=" + shitDate +
+                ", balance=" + balance +
+                ", uuidInput='" + uuidInput + '\'' +
+                ", isRespon='" + isRespon + '\'' +
+                '}';
     }
 }

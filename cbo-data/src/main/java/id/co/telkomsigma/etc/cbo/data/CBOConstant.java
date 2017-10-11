@@ -21,4 +21,27 @@ public interface CBOConstant {
         }
     }
 
+    interface BeanName {
+        String QUEUE_ETC_TRANSACTION = "queue_etc_transaction";
+    }
+
+    interface Queue {
+        String QUEUE_ETC_TRANSACTION = "queue.etc.transaction";
+    }
+
+    interface Query {
+        String IS_HIT_NEW = "N";
+    }
+
+    interface TRX {
+        String TB_ROWID = "TB_ROWID";
+        String PAN = "PAN";
+        String IDC_ID = "IDC_ID";
+        String PLAZA_CODE = "PLAZA_CODE";
+        String PLAZA_NAME = "PLAZA_NAME";
+        String GATE_CODE = "GATE_CODE";
+        String SHIFT_CODE = "SHIFT_CODE";
+        String SHIFT_DATE = "SHIFT_DATE";
+        String OBUTRXTIME = "OBUTRXTIME";
+    }
 }

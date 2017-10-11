@@ -1,4 +1,6 @@
-package id.co.telkomsigma.etc.cbo.data;
+package id.co.telkomsigma.etc.cbo.data.model;
+
+import id.co.telkomsigma.tmf.data.model.base.AAuditTrail;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,13 +11,13 @@ import java.util.Date;
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Entity
-@Table(name = "cpe_list", schema = "bill")
-public class CpeList {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cpe_list_id")
-    private Long cpeListId;
+@Table(name = "cpe_list", schema = "public")
+public class CpeList extends AAuditTrail {
+    /**
+     *
+     *
+     */
+    private static final long serialVersionUID = 2530337063626708966L;
 
     @Column(name = "serial_no", unique = true)
     private String serialNo;
@@ -50,14 +52,6 @@ public class CpeList {
     @Column(name = "update_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
-
-    public Long getCpeListId() {
-        return cpeListId;
-    }
-
-    public void setCpeListId(Long cpeListId) {
-        this.cpeListId = cpeListId;
-    }
 
     public String getSerialNo() {
         return serialNo;
@@ -145,5 +139,10 @@ public class CpeList {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    @Override
+    public String tableName() {
+        return "cpe_list";
     }
 }

@@ -1,4 +1,4 @@
-package id.co.telkomsigma.etc.cbo.data;
+package id.co.telkomsigma.etc.cbo.data.model;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,7 +9,7 @@ import java.util.Date;
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Entity
-@Table(name = "t_event_rated", schema = "bill")
+@Table(name = "t_event_rated", schema = "public")
 public class EventRated {
 
     @Id

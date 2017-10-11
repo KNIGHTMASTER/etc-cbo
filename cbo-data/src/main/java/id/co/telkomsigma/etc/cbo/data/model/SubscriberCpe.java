@@ -1,4 +1,6 @@
-package id.co.telkomsigma.etc.cbo.data;
+package id.co.telkomsigma.etc.cbo.data.model;
+
+import id.co.telkomsigma.tmf.data.model.base.AAuditTrail;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,13 +11,13 @@ import java.util.Date;
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Entity
-@Table(name = "subscriber_cpe", schema = "bill")
-public class SubscriberCpe {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subscriber_cpe_id")
-    private Long subscriberCpeId;
+@Table(name = "subscriber_cpe", schema = "public")
+public class SubscriberCpe extends AAuditTrail {
+    /**
+     *
+     *
+     */
+    private static final long serialVersionUID = -7492949216259936832L;
 
     @Column(name = "subscriber_id")
     private Long subscriberId;
@@ -40,14 +42,6 @@ public class SubscriberCpe {
 
     @Column(name = "update_by")
     private String updateBy;
-
-    public Long getSubscriberCpeId() {
-        return subscriberCpeId;
-    }
-
-    public void setSubscriberCpeId(Long subscriberCpeId) {
-        this.subscriberCpeId = subscriberCpeId;
-    }
 
     public Long getSubscriberId() {
         return subscriberId;
@@ -103,5 +97,10 @@ public class SubscriberCpe {
 
     public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
+    }
+
+    @Override
+    public String tableName() {
+        return "subscriber_cpe";
     }
 }

@@ -1,4 +1,6 @@
-package id.co.telkomsigma.etc.cbo.data;
+package id.co.telkomsigma.etc.cbo.data.model;
+
+import id.co.telkomsigma.tmf.data.model.base.AAuditTrail;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,13 +12,13 @@ import java.util.Date;
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Entity
-@Table(name = "subscriber", schema = "bill")
-public class Subscriber {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "subscriber_id")
-    private Long subscriberId;
+@Table(name = "subscriber", schema = "public")
+public class Subscriber extends AAuditTrail {
+    /**
+     *
+     *
+     */
+    private static final long serialVersionUID = -7599323531722689074L;
 
     @Column(name = "service_no", unique = true)
     private String serviceNo;
@@ -179,14 +181,6 @@ public class Subscriber {
 
     @Column(name = "e_money_id")
     private String eMoneyId;
-
-    public Long getSubscriberId() {
-        return subscriberId;
-    }
-
-    public void setSubscriberId(Long subscriberId) {
-        this.subscriberId = subscriberId;
-    }
 
     public String getServiceNo() {
         return serviceNo;
@@ -594,5 +588,10 @@ public class Subscriber {
 
     public void seteMoneyId(String eMoneyId) {
         this.eMoneyId = eMoneyId;
+    }
+
+    @Override
+    public String tableName() {
+        return "subscriber";
     }
 }

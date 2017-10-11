@@ -1,0 +1,65 @@
+package id.co.telkomsigma.etc.cbo.integration.transaction.endpoint;
+
+import id.co.telkomsigma.etc.cbo.data.dto.EventInputDTO;
+import id.co.telkomsigma.etc.cbo.data.model.LogTrxCBO;
+import id.co.telkomsigma.etc.cbo.integration.transaction.queue.TransactionQueueProducer;
+import id.co.telkomsigma.etc.cbo.integration.transaction.service.IETCTransactionService;
+import id.co.telkomsigma.etc.cbo.integration.transaction.service.ILogTrxCboService;
+import id.co.telkomsigma.tmf.data.constant.EResponseCode;
+import id.co.telkomsigma.tmf.data.dto.ResponseData;
+import id.co.telkomsigma.tmf.service.exception.ServiceException;
+import id.co.telkomsigma.tmf.util.common.time.FormatDateConstant;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+
+/**
+ * Created on 10/3/17.
+ *
+ * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
+ */
+@RestController
+public class TransactionEndPointImpl implements ITransactionEndPoint {
+
+    @Autowired
+    TransactionQueueProducer transactionQueueProducer;
+
+    @Autowired
+    IETCTransactionService transactionService;
+
+    @Autowired
+    ILogTrxCboService logTrxCboService;
+
+    @Override
+    public ResponseData conductTransaction(@RequestBody EventInputDTO p_EventInputDTO) {
+        Date timestampLog = new Date();
+        p_EventInputDTO.setTimestampLog(timestampLog);
+        transactionQueueProducer.send(p_EventInputDTO);
+        insertLog(p_EventInputDTO, timestampLog);
+        return new ResponseData(EResponseCode.RC_SUCCESS.getResponseCode(), EResponseCode.RC_SUCCESS.getResponseMsg());
+    }
+
+    @Override
+    public ResponseData makeTransaction(@RequestBody EventInputDTO p_EventInputDTO) {
+        p_EventInputDTO.setEventTypeId("118");
+        try {
+            transactionService.conductTransaction(p_EventInputDTO);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return new ResponseData(EResponseCode.RC_SUCCESS.getResponseCode(), EResponseCode.RC_SUCCESS.getResponseMsg());
+    }
+
+    private void insertLog(EventInputDTO p_EventInputDTO, Date timestampLog) {
+        LogTrxCBO logTrxCBO = new LogTrxCBO();
+        logTrxCBO.setCode(FormatDateConstant.ISO8601.format(timestampLog));
+        logTrxCBO.setLogDate(timestampLog);
+        logTrxCBO.setRequestBody(p_EventInputDTO.toString());
+        logTrxCBO.setDescription("Start insert into Rest Trx CBO");
+        logTrxCBO.setStatus(1);
+
+        logTrxCboService.insert(logTrxCBO);
+    }
+}

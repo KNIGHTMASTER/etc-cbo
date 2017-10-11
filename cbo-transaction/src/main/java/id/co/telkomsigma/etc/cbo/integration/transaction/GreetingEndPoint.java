@@ -15,7 +15,6 @@ public class GreetingEndPoint {
 
     @GetMapping("/hello")
     public String helloWorld(){
-        System.out.println("Oke");
         return "Hello World CBO";
     }
 }

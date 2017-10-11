@@ -11,5 +11,22 @@
 
     <artifactId>cbo-billing</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>id.co.telkomsigma.tmf</groupId>
+            <artifactId>tmf-security-management-integration</artifactId>
+            <version>${tmf.security.namagement.integration.version}</version>
+        </dependency>
 
+        <dependency>
+            <groupId>id.co.telkomsigma.etc.cbo</groupId>
+            <artifactId>cbo-dao</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-activemq</artifactId>
+        </dependency>
+    </dependencies>
 </project>

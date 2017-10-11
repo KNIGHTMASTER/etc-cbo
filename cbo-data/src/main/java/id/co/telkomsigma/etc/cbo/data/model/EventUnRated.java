@@ -1,4 +1,4 @@
-package id.co.telkomsigma.etc.cbo.data;
+package id.co.telkomsigma.etc.cbo.data.model;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import java.util.Date;
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Entity
-@Table(name = "t_event_unrated", schema = "bill")
+@Table(name = "t_event_unrated", schema = "public")
 public class EventUnRated {
 
     @Id
