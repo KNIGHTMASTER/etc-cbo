@@ -6,6 +6,8 @@ import id.co.telkomsigma.tmf.data.constant.TMFConstant.JMS.TrustedPackages;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jms.DefaultJmsListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -13,6 +15,7 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
 import org.springframework.jms.config.JmsListenerContainerFactory;
 
+import javax.jms.ConnectionFactory;
 import javax.jms.Queue;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +29,18 @@ import static id.co.telkomsigma.etc.cbo.data.CBOConstant.PackageScanner.Cbo.COMP
  */
 @Configuration
 @EnableJms
+@EnableAutoConfiguration
 @Order(6)
 public class CboTransactionJMSConfig {
 
     @Value("${spring.activemq.broker-url}")
     String activeMQBrokerUrl;
+
+    @Value("${jms.listener.transaction.concurrency.size}")
+    String transactionConcurrencySize;
+
+    @Value("${jms.listener.statuslist.concurrency.size}")
+    String statusListConcurrencySize;
 
     @Bean
     public ActiveMQConnectionFactory activeMQConnectionFactory(){
@@ -48,8 +58,19 @@ public class CboTransactionJMSConfig {
     @Bean
     public JmsListenerContainerFactory<?> jmsTrxListenerContainerFactory() {
         DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory = new DefaultJmsListenerContainerFactory();
+        defaultJmsListenerContainerFactory.setConcurrency(transactionConcurrencySize);
+        defaultJmsListenerContainerFactory.setAutoStartup(false);
         defaultJmsListenerContainerFactory.setConnectionFactory(activeMQConnectionFactory());
         return defaultJmsListenerContainerFactory;
+    }
+
+    @Bean
+    public DefaultJmsListenerContainerFactory jmsStatusListTopicConnectionFactory(ConnectionFactory connectionFactory, DefaultJmsListenerContainerFactoryConfigurer configurer) {
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        configurer.configure(factory, connectionFactory);
+        factory.setPubSubDomain(true);
+        factory.setConcurrency(statusListConcurrencySize);
+        return factory;
     }
 
     @Bean(name = JMS.Queue.QUEUE_TRX)

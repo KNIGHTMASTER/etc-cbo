@@ -11,8 +11,9 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface ISubscriberDAO extends IScaffoldingDAO<Subscriber> {
 
-    @Query(value = "select service_no from subscriber a, subscriber_cpe b, cpe_list c where a.id = b.id and b.id = c.id and c.pan =?1 order by a.ACTIVE_DATE desc", nativeQuery = true)
+    @Query(value = "SELECT service_no from subscriber a, subscriber_cpe b, cpe_list c where a.id = b.id and b.id = c.id and c.pan =?1 order by a.ACTIVE_DATE desc", nativeQuery = true)
     String getServiceNoByPan(String p_Pan);
 
-    /*, SubscriberCpe scpe, CpeList cl WHERE s.id = scpe.id AND scpe.id = cl.id AND cl.pan = ?1*/
+    @Query(value = "SELECT COUNT(s) FROM Subscriber s where s.serviceNo = ?1")
+    Long countByServiceNo(String p_ServiceNo);
 }

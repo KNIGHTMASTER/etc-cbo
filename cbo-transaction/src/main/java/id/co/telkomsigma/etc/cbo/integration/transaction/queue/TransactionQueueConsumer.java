@@ -37,13 +37,12 @@ public class TransactionQueueConsumer implements IJMSConsumer<EventInputDTO> {
     @JmsListener(destination = JMS.Queue.QUEUE_TRX, containerFactory = TRX_CONNECTION_FACTORY)
     @Override
     public void receive(EventInputDTO eventInputDTO) {
-//        LOGGER.info("MESSAGE RECEIVED "+eventInputDTO.toString());
+        insertLog(eventInputDTO);
         try {
             etcTransactionService.conductTransaction(eventInputDTO);
         } catch (ServiceException e) {
             LOGGER.error(e.toString());
         }
-        insertLog(eventInputDTO);
     }
 
     private void insertLog(EventInputDTO eventInputDTO) {

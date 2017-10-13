@@ -30,4 +30,9 @@ public class SubscriberServiceImpl extends AScaffoldingService<Subscriber> imple
     public String findServiceNumberByPan(String p_Pan) {
         return subscriberDAO.getServiceNoByPan(p_Pan);
     }
+
+    @Override
+    public Long countByServiceNo(String p_ServiceNo) {
+        return subscriberDAO.countByServiceNo(p_ServiceNo);
+    }
 }

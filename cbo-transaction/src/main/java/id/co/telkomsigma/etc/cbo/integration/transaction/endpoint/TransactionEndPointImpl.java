@@ -36,8 +36,8 @@ public class TransactionEndPointImpl implements ITransactionEndPoint {
     public ResponseData conductTransaction(@RequestBody EventInputDTO p_EventInputDTO) {
         Date timestampLog = new Date();
         p_EventInputDTO.setTimestampLog(timestampLog);
+        insertLog(p_EventInputDTO);
         transactionQueueProducer.send(p_EventInputDTO);
-        insertLog(p_EventInputDTO, timestampLog);
         return new ResponseData(EResponseCode.RC_SUCCESS.getResponseCode(), EResponseCode.RC_SUCCESS.getResponseMsg());
     }
 
@@ -52,10 +52,10 @@ public class TransactionEndPointImpl implements ITransactionEndPoint {
         return new ResponseData(EResponseCode.RC_SUCCESS.getResponseCode(), EResponseCode.RC_SUCCESS.getResponseMsg());
     }
 
-    private void insertLog(EventInputDTO p_EventInputDTO, Date timestampLog) {
+    private void insertLog(EventInputDTO p_EventInputDTO) {
         LogTrxCBO logTrxCBO = new LogTrxCBO();
-        logTrxCBO.setCode(FormatDateConstant.ISO8601.format(timestampLog));
-        logTrxCBO.setLogDate(timestampLog);
+        logTrxCBO.setCode(FormatDateConstant.ISO8601.format(p_EventInputDTO.getTimestampLog()));
+        logTrxCBO.setLogDate(p_EventInputDTO.getTimestampLog());
         logTrxCBO.setRequestBody(p_EventInputDTO.toString());
         logTrxCBO.setDescription("Start insert into Rest Trx CBO");
         logTrxCBO.setStatus(1);

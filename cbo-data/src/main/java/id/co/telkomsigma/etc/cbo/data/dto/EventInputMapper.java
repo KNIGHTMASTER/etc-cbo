@@ -44,7 +44,11 @@ public class EventInputMapper extends ADATAMapper<EventInputDTO, EventInput> imp
         input.setGateCode(null);
         input.setPlazaCode(p_EventInputDTO.getPlazaCode());
         input.setOperatorCode(null);
-        input.setProcessingDate(new Date());
+        try {
+            input.setProcessingDate(eventInputMapperParamDTO.getSimpleDateFormat().parse(eventInputMapperParamDTO.getSimpleDateFormat().format(new Date())));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         input.setStationType(p_EventInputDTO.getStationType());
         input.setLane(p_EventInputDTO.getLane());
         input.setDirection(p_EventInputDTO.getDirection());

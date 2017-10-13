@@ -31,6 +31,10 @@ public interface CBOConstant {
 
     interface Query {
         String IS_HIT_NEW = "N";
+        String FLAG_STATUS_HIT_INSERT = "I";
+        String FLAG_STATUS_HIT_UPDATE = "U";
+        String FLAG_LOG_BI = "BI";
+        String FLAG_LOG_BL = "BL";
     }
 
     interface TRX {

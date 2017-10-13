@@ -7,6 +7,10 @@ package id.co.telkomsigma.etc.cbo.integration.transaction;
  */
 public interface ICBOTransactionConstant {
 
+    interface ApplicationContextName {
+        String APPLICATION_CONTEXT_SCHEDULER = "application.context.scheduler";
+    }
+
     interface Path {
         String CONDUCT_TRANSACTION = "/conduct";
     }
@@ -16,11 +20,32 @@ public interface ICBOTransactionConstant {
     }
 
     interface JMS {
+
         interface ConnectionFactory {
             String TRX_CONNECTION_FACTORY = "jmsTrxListenerContainerFactory";
+            String STATUS_LIST_TOPIC_CONNECTION_FACTORY = "jmsStatusListTopicConnectionFactory";
         }
+
         interface Queue {
             String QUEUE_TRX = "queue.trx";
+        }
+
+        interface Topic {
+            String TOPIC_STATUS_LIST = "topic.status.list";
+        }
+    }
+
+    interface Scheduler {
+        interface Name {
+            String SCHEDULER_QUERY_LIST = "schedulerQueryList";
+        }
+
+        interface TriggerName {
+            String TRIGGER_QUERY_LIST = "triggerQueryList";
+        }
+
+        interface JobDetailName {
+            String JOB_DETAIL_QUERY_LIST = "jobDetailQueryList";
         }
     }
 

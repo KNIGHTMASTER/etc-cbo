@@ -10,5 +10,7 @@ import id.co.telkomsigma.tmf.service.scaffolding.IScaffoldingService;
  */
 public interface ISubscriberService extends IScaffoldingService<Subscriber> {
 
-    public String findServiceNumberByPan(String p_Pan) ;
+    String findServiceNumberByPan(String p_Pan);
+
+    Long countByServiceNo(String p_ServiceNo);
 }
