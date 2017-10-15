@@ -21,8 +21,6 @@ public class SchedulerBalanceInfoQueryListLauncher extends ASchedulerLauncher {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerBalanceInfoQueryListLauncher.class);
 
-    private IBalanceInfoQueryListService balanceInfoQueryListService;
-
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         ApplicationContext appCtx = null;
@@ -32,7 +30,7 @@ public class SchedulerBalanceInfoQueryListLauncher extends ASchedulerLauncher {
             LOGGER.error("Error injection application context ".concat(e.toString()));
         }
         LOGGER.info("Balance Info Query List Scheduler Started");
-        balanceInfoQueryListService = appCtx.getBean(IBalanceInfoQueryListService.class);
+        IBalanceInfoQueryListService balanceInfoQueryListService = appCtx.getBean(IBalanceInfoQueryListService.class);
         balanceInfoQueryListService.conduct();
     }
 }

@@ -1,6 +1,7 @@
 package id.co.telkomsigma.etc.cbo.integration.transaction.endpoint;
 
 import id.co.telkomsigma.etc.cbo.data.dto.EventInputDTO;
+import id.co.telkomsigma.etc.cbo.data.dto.response.ResponseDataHateoas;
 import id.co.telkomsigma.etc.cbo.data.model.LogTrxCBO;
 import id.co.telkomsigma.etc.cbo.integration.transaction.queue.TransactionQueueProducer;
 import id.co.telkomsigma.etc.cbo.integration.transaction.service.IETCTransactionService;
@@ -10,10 +11,14 @@ import id.co.telkomsigma.tmf.data.dto.ResponseData;
 import id.co.telkomsigma.tmf.service.exception.ServiceException;
 import id.co.telkomsigma.tmf.util.common.time.FormatDateConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+
+import static id.co.telkomsigma.etc.cbo.integration.transaction.ICBOTransactionConstant.Path.CONDUCT_TRANSACTION;
 
 /**
  * Created on 10/3/17.
@@ -33,12 +38,17 @@ public class TransactionEndPointImpl implements ITransactionEndPoint {
     ILogTrxCboService logTrxCboService;
 
     @Override
-    public ResponseData conductTransaction(@RequestBody EventInputDTO p_EventInputDTO) {
+    public ResponseDataHateoas conductTransaction(@RequestBody EventInputDTO p_EventInputDTO) {
+        Link selfLink = ControllerLinkBuilder.linkTo(TransactionEndPointImpl.class).slash(CONDUCT_TRANSACTION).withSelfRel();
         Date timestampLog = new Date();
         p_EventInputDTO.setTimestampLog(timestampLog);
         insertLog(p_EventInputDTO);
         transactionQueueProducer.send(p_EventInputDTO);
-        return new ResponseData(EResponseCode.RC_SUCCESS.getResponseCode(), EResponseCode.RC_SUCCESS.getResponseMsg());
+        ResponseData responseData = new ResponseData(EResponseCode.RC_SUCCESS.getResponseCode(), EResponseCode.RC_SUCCESS.getResponseMsg());
+        ResponseDataHateoas responseDataHateoas = new ResponseDataHateoas();
+        responseDataHateoas.setResponseData(responseData);
+        responseDataHateoas.add(selfLink);
+        return responseDataHateoas;
     }
 
     @Override

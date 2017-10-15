@@ -1,6 +1,7 @@
 package id.co.telkomsigma.etc.cbo.integration.transaction.endpoint;
 
 import id.co.telkomsigma.etc.cbo.data.dto.EventInputDTO;
+import id.co.telkomsigma.etc.cbo.data.dto.response.ResponseDataHateoas;
 import id.co.telkomsigma.etc.cbo.integration.transaction.ICBOTransactionConstant;
 import id.co.telkomsigma.tmf.data.constant.TMFConstant;
 import id.co.telkomsigma.tmf.data.dto.ResponseData;
@@ -23,7 +24,7 @@ public interface ITransactionEndPoint {
     @ResponseBody
     @PostMapping(value = ICBOTransactionConstant.Path.CONDUCT_TRANSACTION, produces = TMFConstant.Common.APPLICATION_JSON)
     @ApiOperation(value = "Conduct", notes = "Conduct Transaction From Plaza to CBO", response = ResponseData.class)
-    ResponseData conductTransaction(@RequestBody EventInputDTO p_EventInputDTO);
+    ResponseDataHateoas conductTransaction(@RequestBody EventInputDTO p_EventInputDTO);
 
     @ResponseBody
     @PostMapping(value = "/make", produces = TMFConstant.Common.APPLICATION_JSON)
