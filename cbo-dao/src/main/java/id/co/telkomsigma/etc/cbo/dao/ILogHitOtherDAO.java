@@ -1,12 +1,12 @@
 package id.co.telkomsigma.etc.cbo.dao;
 
 import id.co.telkomsigma.etc.cbo.data.model.LogHitOther;
-import org.springframework.data.jpa.repository.JpaRepository;
+import id.co.telkomsigma.tmf.dao.crud.ICrudDAO;
 
 /**
  * Created on 10/13/17.
  *
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
-public interface ILogHitOtherDAO extends JpaRepository<LogHitOther, Long> {
+public interface ILogHitOtherDAO extends ICrudDAO<LogHitOther> {
 }

@@ -1,5 +1,7 @@
 package id.co.telkomsigma.etc.cbo.data.model;
 
+import id.co.telkomsigma.tmf.data.model.base.ACrudDATA;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,24 +12,12 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "t_log_hitother", schema = "public")
-public class LogHitOther {
+public class LogHitOther extends ACrudDATA<Long> {
 
-    private Long id;
     private Date logDate;
     private String flagLog;
     private String errorResponse;
     private Date dateRequest;
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Column(name = "log_date")
     @Temporal(TemporalType.TIMESTAMP)

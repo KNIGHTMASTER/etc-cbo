@@ -49,4 +49,11 @@ public interface IBalanceInfoQueryListService {
      * @param p_EMoneyId Param E-Money Id
      */
     Integer selectExistingEMoney(String p_EMoneyId);
+
+    /**
+     * <p>
+     *     As Representative from Package Oracle Create Status List in Previous Program
+     * </p>
+     */
+    void packCreateStatusList();
 }

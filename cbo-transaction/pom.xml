@@ -12,6 +12,10 @@
     <name>cbo-transaction</name>
     <artifactId>cbo-transaction</artifactId>
 
+    <properties>
+        <spring-cloud.version>Dalston.SR4</spring-cloud.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>id.co.telkomsigma.tmf</groupId>
@@ -40,6 +44,22 @@
             <artifactId>tmf-batch</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-feign</artifactId>
+        </dependency>
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

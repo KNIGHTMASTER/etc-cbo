@@ -19,6 +19,10 @@ public interface ICBOTransactionConstant {
         String TRX_EVENT_TYPE_ID = "118";
     }
 
+    interface ReferenceListCode {
+        String STATUS_LIST = "T_STATUS_LIST";
+    }
+
     interface JMS {
 
         interface ConnectionFactory {

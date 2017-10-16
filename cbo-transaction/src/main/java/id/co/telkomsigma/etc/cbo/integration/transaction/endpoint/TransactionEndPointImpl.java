@@ -44,6 +44,7 @@ public class TransactionEndPointImpl implements ITransactionEndPoint {
         p_EventInputDTO.setTimestampLog(timestampLog);
         insertLog(p_EventInputDTO);
         transactionQueueProducer.send(p_EventInputDTO);
+
         ResponseData responseData = new ResponseData(EResponseCode.RC_SUCCESS.getResponseCode(), EResponseCode.RC_SUCCESS.getResponseMsg());
         ResponseDataHateoas responseDataHateoas = new ResponseDataHateoas();
         responseDataHateoas.setResponseData(responseData);

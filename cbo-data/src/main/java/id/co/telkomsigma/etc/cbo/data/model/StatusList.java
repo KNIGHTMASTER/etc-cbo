@@ -1,5 +1,7 @@
 package id.co.telkomsigma.etc.cbo.data.model;
 
+import id.co.telkomsigma.tmf.data.model.base.ACrudDATA;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -11,9 +13,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "t_status_list", schema = "public")
-public class StatusList {
-
-    private Long id;
+public class StatusList extends ACrudDATA<Long> {
     private Date timestamp;
     private String productId;
     private String dataId;
@@ -30,17 +30,6 @@ public class StatusList {
     private String fileName;
     private Integer fileSeq;
     private Date timeStampIc;
-
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Column(name = "timestamp")
     @Temporal(TemporalType.TIMESTAMP)
