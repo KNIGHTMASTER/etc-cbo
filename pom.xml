@@ -47,5 +47,6 @@
         <tmf.data.version>1.0.0</tmf.data.version>
         <tmf.dao.version>1.0.0</tmf.dao.version>
         <tmf.security.namagement.integration.version>1.0.0</tmf.security.namagement.integration.version>
+        <hikari.version>2.7.2</hikari.version>
     </properties>
 </project>

@@ -44,6 +44,9 @@ public class BalanceInfoQueryListServiceImpl implements IBalanceInfoQueryListSer
     @Autowired
     IProcessLog2Service processLog2Service;
 
+    @Autowired
+    IStatusListService statusListService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(BalanceInfoQueryListServiceImpl.class);
 
     @Override
@@ -114,6 +117,15 @@ public class BalanceInfoQueryListServiceImpl implements IBalanceInfoQueryListSer
         if (referenceLists.size() > 0){
             try {
                 processLog2Service.writeMessage(Integer.parseInt(String.valueOf(referenceLists.get(0).getId())), "Mulai proses ...", null, null, null, null);
+                Long filteredCountStatusList = statusListService.countStatusListByEMoneyAndFlagSourceAndIsWrite();
+                if (filteredCountStatusList > 0){
+                    /*p_create_file_bulk*/
+                }
+
+                Long filteredCountStatusList2 = statusListService.countStatusListByEMoneyAndFlagSourceAndIsWriteAndInputDataControl();
+                if (filteredCountStatusList2 > 0){
+                    /*p_create_file_incr*/
+                }
             } catch (ServiceException e) {
                 LOGGER.error("Error Writing Message Process Log 2", e.toString());
             }

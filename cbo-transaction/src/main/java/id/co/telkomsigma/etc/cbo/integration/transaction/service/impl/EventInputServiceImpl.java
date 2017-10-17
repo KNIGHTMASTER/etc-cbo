@@ -31,4 +31,9 @@ public class EventInputServiceImpl extends AScaffoldingService<EventInput> imple
     public List<EventInput> findByIsHit(String p_IsHit) {
         return eventInputDAO.findByIsHit(p_IsHit);
     }
+
+    @Override
+    public EventInput findByUuidInput(String p_UUID) {
+        return eventInputDAO.findByUuidInput(p_UUID);
+    }
 }

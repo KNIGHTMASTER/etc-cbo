@@ -1,6 +1,5 @@
 package id.co.telkomsigma.etc.cbo.integration.transaction.service.impl;
 
-import id.co.telkomsigma.etc.cbo.dao.IEventInputDAO;
 import id.co.telkomsigma.etc.cbo.data.CBOConstant.Query;
 import id.co.telkomsigma.etc.cbo.data.CBOConstant.TRX;
 import id.co.telkomsigma.etc.cbo.data.dto.EventInputDTO;
@@ -8,11 +7,13 @@ import id.co.telkomsigma.etc.cbo.data.dto.EventInputMapper;
 import id.co.telkomsigma.etc.cbo.data.dto.EventInputMapperParamDTO;
 import id.co.telkomsigma.etc.cbo.data.dto.param.PlazaNameParamDTO;
 import id.co.telkomsigma.etc.cbo.data.dto.request.chargebatch.*;
+import id.co.telkomsigma.etc.cbo.data.dto.response.ChargeResponseDTO;
 import id.co.telkomsigma.etc.cbo.data.model.EventInput;
 import id.co.telkomsigma.etc.cbo.data.model.LogTrxCBO;
 import id.co.telkomsigma.etc.cbo.integration.transaction.client.ChargeBatchStartClient;
 import id.co.telkomsigma.etc.cbo.integration.transaction.service.*;
 import id.co.telkomsigma.etc.cbo.integration.transaction.util.UUIDGenerator;
+import id.co.telkomsigma.tmf.data.constant.TMFConstant;
 import id.co.telkomsigma.tmf.service.exception.ServiceException;
 import id.co.telkomsigma.tmf.util.common.time.FormatDateConstant;
 import org.slf4j.Logger;
@@ -38,22 +39,19 @@ import static id.co.telkomsigma.etc.cbo.integration.transaction.ICBOTransactionC
 public class ETCTransactionServiceImpl implements IETCTransactionService {
 
     @Autowired
-    IEventInputService eventInputService;
+    private IEventInputService eventInputService;
 
     @Autowired
-    EventInputMapper eventInputMapper;
+    private EventInputMapper eventInputMapper;
 
     @Autowired
-    IEventInputDAO eventInputDAO;
+    private ChargeBatchStartClient chargeBatchStartClient;
 
     @Autowired
-    ChargeBatchStartClient chargeBatchStartClient;
+    private ISubscriberService subscriberService;
 
     @Autowired
-    ISubscriberService subscriberService;
-
-    @Autowired
-    IPlazaService plazaService;
+    private IPlazaService plazaService;
 
     @Autowired
     ILogTrxCboService logTrxCboService;
@@ -67,6 +65,8 @@ public class ETCTransactionServiceImpl implements IETCTransactionService {
     @Value("${cellum.apptypeid}")
     private String cellumAppTypeId;
 
+    private EventInputMapperParamDTO eventInputMapperParamDTO;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(ETCTransactionServiceImpl.class);
 
     @Transactional
@@ -78,8 +78,7 @@ public class ETCTransactionServiceImpl implements IETCTransactionService {
         } catch (ServiceException e) {
             LOGGER.error("Failed insert event input "+e.toString());
         }
-
-        hitChargeBatchStartAPI();
+        hitChargeBatchStartAPI(eventInputMapperParamDTO.getUuid());
         insertLog(p_EventInputDTO, "Hit Charge Batch Start", 3);
     }
 
@@ -87,7 +86,7 @@ public class ETCTransactionServiceImpl implements IETCTransactionService {
     public void insertEventInput(EventInputDTO p_EventInputDTO) throws ServiceException {
         p_EventInputDTO.setEventTypeId(TRX_EVENT_TYPE_ID);
 
-        EventInputMapperParamDTO eventInputMapperParamDTO = new EventInputMapperParamDTO();
+        eventInputMapperParamDTO = new EventInputMapperParamDTO();
         eventInputMapperParamDTO.setSimpleDateFormat(FormatDateConstant.DEFAULT2);
         eventInputMapperParamDTO.setUuid(UUIDGenerator.generate());
         eventInputMapper.setParam(eventInputMapperParamDTO);
@@ -97,102 +96,14 @@ public class ETCTransactionServiceImpl implements IETCTransactionService {
 
     @Override
     public void hitChargeBatchStartAPI() {
-        ChargeRequestDTO chargeRequestDTO = new ChargeRequestDTO();
-        List<ChargeRequestContentDTO> chargeRequestContentDTOs = new ArrayList<>();
-        chargeRequestDTO.setChargeRequests(chargeRequestContentDTOs);
         List<EventInput> eventInputs = null;
         try {
             eventInputs = eventInputService.findByIsHit(Query.IS_HIT_NEW);
         } catch (ServiceException e) {
             LOGGER.error("Failed to find all event inputs "+e.toString());
         }
-        if (eventInputs != null && eventInputs.size() > 0) {
-            for (EventInput eventInput : eventInputs) {
-                ChargeRequestContentDTO chargeRequestContentDTO = new ChargeRequestContentDTO();
-                chargeRequestContentDTO.setExternalId(eventInput.getUuidInput());
-
-                MerchantDTO merchantDTO = new MerchantDTO();
-                merchantDTO.setMerchantId(Integer.parseInt(cellumMerchantId));
-                merchantDTO.setTerminalId(Integer.parseInt(cellumTerminalId));
-                chargeRequestContentDTO.setMerchant(merchantDTO);
-
-                UserDTO userDTO = new UserDTO();
-                userDTO.setAccountId(subscriberService.findServiceNumberByPan(eventInput.getPan()));
-                userDTO.setAppTypeId(Integer.parseInt(cellumAppTypeId));
-                chargeRequestContentDTO.setUser(userDTO);
-
-                ChargeDTO chargeDTO = new ChargeDTO();
-                chargeDTO.setAmount(eventInput.getTrxAmount());
-                chargeDTO.setCommissionFee(BigDecimal.ONE);
-                chargeDTO.setDescription("JM Gate Kapuk");
-
-                PlazaNameParamDTO plazaNameParamDTO = plazaService.findPlazaNameByPlazaCode(eventInput.getPlazaCode());
-
-                List<ReferencesDTO> referencesDTOList = new ArrayList<>();
-
-                ReferencesDTO referenceRowId = new ReferencesDTO();
-                referenceRowId.setKey(TRX.TB_ROWID);
-                referenceRowId.setValue(eventInput.getUuidInput());
-                referencesDTOList.add(referenceRowId);
-
-                ReferencesDTO referencePan = new ReferencesDTO();
-                referencePan.setKey(TRX.PAN);
-                referencePan.setValue(eventInput.getPan());
-                referencesDTOList.add(referencePan);
-
-                ReferencesDTO referenceIDCID = new ReferencesDTO();
-                referenceIDCID.setKey(TRX.IDC_ID);
-                referenceIDCID.setValue(String.valueOf(eventInput.getInputDataControlId()));
-                referencesDTOList.add(referenceIDCID);
-
-                ReferencesDTO referencePlazaCode = new ReferencesDTO();
-                referencePlazaCode.setKey(TRX.PLAZA_CODE);
-                referencePlazaCode.setValue(eventInput.getPlazaCode());
-                referencesDTOList.add(referencePlazaCode);
-
-                ReferencesDTO referencePlazaName = new ReferencesDTO();
-                referencePlazaName.setKey(TRX.PLAZA_NAME);
-                referencePlazaName.setValue(plazaNameParamDTO.getPlazaName());
-                referencesDTOList.add(referencePlazaName);
-
-                ReferencesDTO referenceGateCode = new ReferencesDTO();
-                referenceGateCode.setKey(TRX.GATE_CODE);
-                referenceGateCode.setValue(eventInput.getLane());
-                referencesDTOList.add(referenceGateCode);
-
-                ReferencesDTO referenceShiftCode = new ReferencesDTO();
-                referenceShiftCode.setKey(TRX.SHIFT_CODE);
-                referenceShiftCode.setValue(eventInput.getShift());
-                referencesDTOList.add(referenceShiftCode);
-
-                ReferencesDTO referenceShiftDate = new ReferencesDTO();
-                referenceShiftDate.setKey(TRX.SHIFT_DATE);
-                referenceShiftDate.setValue(FormatDateConstant.DEFAULT3.format(eventInput.getShiftDate()));
-                referencesDTOList.add(referenceShiftDate);
-
-                ReferencesDTO referenceObuTrx = new ReferencesDTO();
-                referenceObuTrx.setKey(TRX.OBUTRXTIME);
-                referenceObuTrx.setValue(FormatDateConstant.DEFAULT4.format(eventInput.getEventBeginTime()));
-                referencesDTOList.add(referenceObuTrx);
-
-                chargeDTO.setReferences(referencesDTOList);
-                chargeRequestContentDTO.setCharge(chargeDTO);
-
-                chargeRequestContentDTOs.add(chargeRequestContentDTO);
-            }
-        }
-        /*ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println(mapper.writeValueAsString(chargeRequestDTO));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        ChargeResponseDTO chargeResponseDTO = chargeBatchStartClient.queryClient(null, chargeRequestDTO);
-        if (chargeResponseDTO.getResultCode().equals(GeneralValue.OK)) {
-            LOGGER.info("Success Hit Charge Batch Start");
-        }else {
-            LOGGER.error("Failed Hit Charge Batch Start");
-        }*/
+        ChargeRequestDTO chargeRequestDTO = buildRequestHitCharge(eventInputs);
+        /*runRestClient(chargeRequestDTO);*/
     }
 
     private void insertLog(EventInputDTO eventInputDTO, String p_Description, int p_Status) {
@@ -206,4 +117,114 @@ public class ETCTransactionServiceImpl implements IETCTransactionService {
         logTrxCboService.insert(logTrxCBO);
     }
 
-}
+    @Override
+    public void hitChargeBatchStartAPI(String p_Id) {
+        EventInput foundEventInput = eventInputService.findByUuidInput(p_Id);
+        List<EventInput> eventInputs = new ArrayList<>();
+        eventInputs.add(foundEventInput);
+        if (foundEventInput != null) {
+            ChargeRequestDTO chargeRequestDTO = buildRequestHitCharge(eventInputs);
+            /*runRestClient(chargeRequestDTO);*/
+        }
+    }
+
+
+    @Override
+    public ChargeRequestDTO buildRequestHitCharge(List<EventInput> p_EventInputList) {
+        ChargeRequestDTO chargeRequestDTO = new ChargeRequestDTO();
+        List<ChargeRequestContentDTO> chargeRequestContentDTOs = new ArrayList<>();
+        chargeRequestDTO.setChargeRequests(chargeRequestContentDTOs);
+        if (p_EventInputList.size() > 0) {
+            for (EventInput eventInput : p_EventInputList) {
+                chargeRequestContentDTOs.add(buildContentRequestHitCharge(eventInput));
+            }
+        } else {
+            EventInput eventInput = p_EventInputList.get(0);
+            chargeRequestContentDTOs.add(buildContentRequestHitCharge(eventInput));
+        }
+        return chargeRequestDTO;
+    }
+
+    public ChargeRequestContentDTO buildContentRequestHitCharge(EventInput eventInput) {
+        ChargeRequestContentDTO chargeRequestContentDTO = new ChargeRequestContentDTO();
+        chargeRequestContentDTO.setExternalId(eventInput.getUuidInput());
+
+        MerchantDTO merchantDTO = new MerchantDTO();
+        merchantDTO.setMerchantId(Integer.parseInt(cellumMerchantId));
+        merchantDTO.setTerminalId(Integer.parseInt(cellumTerminalId));
+        chargeRequestContentDTO.setMerchant(merchantDTO);
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setAccountId(subscriberService.findServiceNumberByPan(eventInput.getPan()));
+        userDTO.setAppTypeId(Integer.parseInt(cellumAppTypeId));
+        chargeRequestContentDTO.setUser(userDTO);
+
+        ChargeDTO chargeDTO = new ChargeDTO();
+        chargeDTO.setAmount(eventInput.getTrxAmount());
+        chargeDTO.setCommissionFee(BigDecimal.ONE);
+        chargeDTO.setDescription("JM Gate Kapuk");
+
+        PlazaNameParamDTO plazaNameParamDTO = plazaService.findPlazaNameByPlazaCode(eventInput.getPlazaCode());
+
+        List<ReferencesDTO> referencesDTOList = new ArrayList<>();
+
+        ReferencesDTO referenceRowId = new ReferencesDTO();
+        referenceRowId.setKey(TRX.TB_ROWID);
+        referenceRowId.setValue(eventInput.getUuidInput());
+        referencesDTOList.add(referenceRowId);
+
+        ReferencesDTO referencePan = new ReferencesDTO();
+        referencePan.setKey(TRX.PAN);
+        referencePan.setValue(eventInput.getPan());
+        referencesDTOList.add(referencePan);
+
+        ReferencesDTO referenceIDCID = new ReferencesDTO();
+        referenceIDCID.setKey(TRX.IDC_ID);
+        referenceIDCID.setValue(String.valueOf(eventInput.getInputDataControlId()));
+        referencesDTOList.add(referenceIDCID);
+
+        ReferencesDTO referencePlazaCode = new ReferencesDTO();
+        referencePlazaCode.setKey(TRX.PLAZA_CODE);
+        referencePlazaCode.setValue(eventInput.getPlazaCode());
+        referencesDTOList.add(referencePlazaCode);
+
+        ReferencesDTO referencePlazaName = new ReferencesDTO();
+        referencePlazaName.setKey(TRX.PLAZA_NAME);
+        referencePlazaName.setValue(plazaNameParamDTO.getPlazaName());
+        referencesDTOList.add(referencePlazaName);
+
+        ReferencesDTO referenceGateCode = new ReferencesDTO();
+        referenceGateCode.setKey(TRX.GATE_CODE);
+        referenceGateCode.setValue(eventInput.getLane());
+        referencesDTOList.add(referenceGateCode);
+
+        ReferencesDTO referenceShiftCode = new ReferencesDTO();
+        referenceShiftCode.setKey(TRX.SHIFT_CODE);
+        referenceShiftCode.setValue(eventInput.getShift());
+        referencesDTOList.add(referenceShiftCode);
+
+        ReferencesDTO referenceShiftDate = new ReferencesDTO();
+        referenceShiftDate.setKey(TRX.SHIFT_DATE);
+        referenceShiftDate.setValue(FormatDateConstant.DEFAULT3.format(eventInput.getShiftDate()));
+        referencesDTOList.add(referenceShiftDate);
+
+        ReferencesDTO referenceObuTrx = new ReferencesDTO();
+        referenceObuTrx.setKey(TRX.OBUTRXTIME);
+        referenceObuTrx.setValue(FormatDateConstant.DEFAULT4.format(eventInput.getEventBeginTime()));
+        referencesDTOList.add(referenceObuTrx);
+
+        chargeDTO.setReferences(referencesDTOList);
+        chargeRequestContentDTO.setCharge(chargeDTO);
+
+        return chargeRequestContentDTO;
+    }
+
+    @Override
+    public void runRestClient(ChargeRequestDTO p_ChargeRequestDTO) {
+        ChargeResponseDTO chargeResponseDTO = chargeBatchStartClient.queryClient(null, p_ChargeRequestDTO);
+        if (chargeResponseDTO.getResultCode().equals(TMFConstant.Common.GeneralValue.OK)) {
+            LOGGER.info("Success Hit Charge Batch Start");
+        }else {
+            LOGGER.error("Failed Hit Charge Batch Start");
+        }
+    }}

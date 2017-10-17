@@ -13,4 +13,6 @@ import java.util.List;
 public interface IEventInputDAO extends IScaffoldingDAO<EventInput> {
 
     List<EventInput> findByIsHit(String p_IsHit);
+
+    EventInput findByUuidInput(String p_UUID);
 }

@@ -14,4 +14,6 @@ import java.util.List;
 public interface IEventInputService extends IScaffoldingService<EventInput> {
 
     List<EventInput> findByIsHit(String p_IsHit) throws ServiceException;
+
+    EventInput findByUuidInput(String p_UUID);
 }

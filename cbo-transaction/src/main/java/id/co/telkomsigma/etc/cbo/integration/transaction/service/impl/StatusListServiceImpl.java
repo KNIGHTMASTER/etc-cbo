@@ -24,4 +24,14 @@ public class StatusListServiceImpl extends ACrudService<StatusList> implements I
     public void init() {
         super.scaffoldingDAO = statusListDAO;
     }
+
+    @Override
+    public Long countStatusListByEMoneyAndFlagSourceAndIsWrite() {
+        return statusListDAO.countStatusListByEMoneyAndFlagSourceAndIsWrite();
+    }
+
+    @Override
+    public Long countStatusListByEMoneyAndFlagSourceAndIsWriteAndInputDataControl() {
+        return statusListDAO.countStatusListByEMoneyAndFlagSourceAndIsWriteAndInputDataControl();
+    }
 }

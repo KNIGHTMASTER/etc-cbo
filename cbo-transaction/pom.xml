@@ -21,7 +21,7 @@
             <groupId>id.co.telkomsigma.tmf</groupId>
             <artifactId>tmf-security-management-integration</artifactId>
             <version>${tmf.security.namagement.integration.version}</version>
-            <!--<exclusions>
+            <exclusions>
                 <exclusion>
                     <groupId>io.springfox</groupId>
                     <artifactId>springfox-swagger2</artifactId>
@@ -30,19 +30,31 @@
                     <groupId>io.springfox</groupId>
                     <artifactId>springfox-swagger-ui</artifactId>
                 </exclusion>
-            </exclusions>-->
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>id.co.telkomsigma.etc.cbo</groupId>
             <artifactId>cbo-dao</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
             <groupId>id.co.telkomsigma.tmf</groupId>
             <artifactId>tmf-batch</artifactId>
             <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hikari.version}</version>
         </dependency>
 
         <dependency>

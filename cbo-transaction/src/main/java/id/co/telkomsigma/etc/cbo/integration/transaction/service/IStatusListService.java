@@ -9,4 +9,9 @@ import id.co.telkomsigma.tmf.service.crud.ICrudService;
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 public interface IStatusListService extends ICrudService<StatusList, Long>{
+
+    Long countStatusListByEMoneyAndFlagSourceAndIsWrite();
+
+    Long countStatusListByEMoneyAndFlagSourceAndIsWriteAndInputDataControl();
+
 }
