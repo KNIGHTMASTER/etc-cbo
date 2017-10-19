@@ -43,6 +43,12 @@
             <artifactId>tmf-data</artifactId>
             <version>${tmf.data.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>id.co.telkomsigma.etc.cbo</groupId>
+            <artifactId>cbo-shared-data</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 

@@ -33,6 +33,9 @@ import static id.co.telkomsigma.etc.cbo.data.CBOConstant.PackageScanner.Cbo.COMP
 @Order(6)
 public class CboTransactionJMSConfig {
 
+    @Value("${jmx.listener.autostartup}")
+    private String jmxAutoStartup;
+
     @Value("${spring.activemq.broker-url}")
     String activeMQBrokerUrl;
 
@@ -59,7 +62,7 @@ public class CboTransactionJMSConfig {
     public JmsListenerContainerFactory<?> jmsTrxListenerContainerFactory() {
         DefaultJmsListenerContainerFactory defaultJmsListenerContainerFactory = new DefaultJmsListenerContainerFactory();
         defaultJmsListenerContainerFactory.setConcurrency(transactionConcurrencySize);
-        defaultJmsListenerContainerFactory.setAutoStartup(false);
+        defaultJmsListenerContainerFactory.setAutoStartup(Boolean.parseBoolean(jmxAutoStartup));
         defaultJmsListenerContainerFactory.setConnectionFactory(activeMQConnectionFactory());
         return defaultJmsListenerContainerFactory;
     }

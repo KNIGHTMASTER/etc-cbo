@@ -38,6 +38,7 @@
         <module>cbo-dao</module>
         <module>cbo-transaction</module>
         <module>cbo-billing</module>
+        <module>cbo-shared-data</module>
     </modules>
     
     <properties>
