@@ -24,4 +24,13 @@ public class StatusListDTO implements Serializable {
     public void setContents(List<StatusListContentDTO> contents) {
         this.contents = contents;
     }
+
+    @Override
+    public String toString() {
+        String result = "";
+        for (StatusListContentDTO contentDTO : contents) {
+            result += contentDTO.toString();
+        }
+        return result;
+    }
 }

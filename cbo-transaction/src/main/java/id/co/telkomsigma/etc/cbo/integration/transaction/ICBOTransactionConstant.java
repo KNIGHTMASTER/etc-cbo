@@ -23,6 +23,12 @@ public interface ICBOTransactionConstant {
         String STATUS_LIST = "T_STATUS_LIST";
     }
 
+    interface IsHitEventInput {
+        String BATCH_START = "BS";
+        String QUERY_LIST = "QL";
+        String FAILED_CHARGE_BATCH = "FB";
+    }
+
     interface JMS {
 
         interface ConnectionFactory {

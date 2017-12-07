@@ -29,7 +29,6 @@ public class EventInputMapper extends ADATAMapper<EventInputDTO, EventInput> imp
         EventInput input = new EventInput();
         input.setInputDataControlId(null);
         input.setJobControlId(null);
-        input.setEventTypeId(Integer.valueOf(p_EventInputDTO.getEventTypeId()));
         input.setWalletId(null);
         input.setObuId(p_EventInputDTO.getObuId());
         input.setTrxRefferenceCode(null);

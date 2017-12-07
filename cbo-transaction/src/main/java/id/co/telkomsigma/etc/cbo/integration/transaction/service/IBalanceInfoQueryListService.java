@@ -56,4 +56,12 @@ public interface IBalanceInfoQueryListService {
      * </p>
      */
     void packCreateStatusList();
+
+    /**
+     * <p>
+     *     Conduct Query List V2 Process.
+     * </p>
+     */
+    @Transactional
+    void conductV2();
 }

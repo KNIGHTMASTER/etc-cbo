@@ -22,7 +22,6 @@ public class EventInput extends AAuditTrail {
 
     private Long inputDataControlId;
     private Long jobControlId;
-    private Integer eventTypeId;
     private String walletId;
     private String obuId;
     private String trxRefferenceCode;
@@ -106,15 +105,6 @@ public class EventInput extends AAuditTrail {
 
     public void setJobControlId(Long jobControlId) {
         this.jobControlId = jobControlId;
-    }
-
-    @Column(name = "event_type_id")
-    public Integer getEventTypeId() {
-        return eventTypeId;
-    }
-
-    public void setEventTypeId(Integer eventTypeId) {
-        this.eventTypeId = eventTypeId;
     }
 
     @Column(name = "wallet_id")
