@@ -16,4 +16,9 @@ public interface ISubscriberDAO extends IScaffoldingDAO<Subscriber> {
 
     @Query(value = "SELECT COUNT(s) FROM Subscriber s where s.serviceNo = ?1")
     Long countByServiceNo(String p_ServiceNo);
+
+    Subscriber findByServiceNo(String p_ServiceNo);
+
+    @Query(value = "SELECT pan from subscriber a, subscriber_cpe b, cpe_list c where a.id = b.id and b.id = c.id and a.service_no =?1 order by a.ACTIVE_DATE desc", nativeQuery = true)
+    String findPanByServiceNo(String p_ServiceNo);
 }

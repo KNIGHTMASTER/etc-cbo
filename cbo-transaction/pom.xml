@@ -21,7 +21,7 @@
             <groupId>id.co.telkomsigma.tmf</groupId>
             <artifactId>tmf-security-management-integration</artifactId>
             <version>${tmf.security.namagement.integration.version}</version>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <groupId>io.springfox</groupId>
                     <artifactId>springfox-swagger2</artifactId>
@@ -30,7 +30,7 @@
                     <groupId>io.springfox</groupId>
                     <artifactId>springfox-swagger-ui</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>-->
         </dependency>
 
         <dependency>

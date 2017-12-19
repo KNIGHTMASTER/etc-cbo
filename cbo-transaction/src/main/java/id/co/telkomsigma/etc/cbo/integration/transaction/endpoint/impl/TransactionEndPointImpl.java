@@ -1,8 +1,9 @@
-package id.co.telkomsigma.etc.cbo.integration.transaction.endpoint;
+package id.co.telkomsigma.etc.cbo.integration.transaction.endpoint.impl;
 
 import id.co.telkomsigma.etc.cbo.data.dto.EventInputDTO;
 import id.co.telkomsigma.etc.cbo.data.dto.response.ResponseDataHateoas;
 import id.co.telkomsigma.etc.cbo.data.model.LogTrxCBO;
+import id.co.telkomsigma.etc.cbo.integration.transaction.endpoint.ITransactionEndPoint;
 import id.co.telkomsigma.etc.cbo.integration.transaction.queue.TransactionQueueProducer;
 import id.co.telkomsigma.etc.cbo.integration.transaction.service.IETCTransactionService;
 import id.co.telkomsigma.etc.cbo.integration.transaction.service.ILogTrxCboService;

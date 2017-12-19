@@ -13,6 +13,7 @@ public interface ICBOTransactionConstant {
 
     interface Path {
         String CONDUCT_TRANSACTION = "/conduct";
+        String BLACKLIST = "/blacklist";
     }
 
     interface TransactionCode {
@@ -34,6 +35,7 @@ public interface ICBOTransactionConstant {
         interface ConnectionFactory {
             String TRX_CONNECTION_FACTORY = "jmsTrxListenerContainerFactory";
             String STATUS_LIST_TOPIC_CONNECTION_FACTORY = "jmsStatusListTopicConnectionFactory";
+            String BLACK_LIST_TOPIC_CONNECTION_FACTORY = "jmsBlackListTopicConnectionFactory";
         }
 
         interface Queue {
@@ -42,20 +44,24 @@ public interface ICBOTransactionConstant {
 
         interface Topic {
             String TOPIC_STATUS_LIST = "topic.status.list";
+            String TOPIC_BLACK_LIST = "topic.black.list";
         }
     }
 
     interface Scheduler {
         interface Name {
             String SCHEDULER_QUERY_LIST = "schedulerQueryList";
+            String SCHEDULER_BALANCE_INFO = "schedulerBalanceInfo";
         }
 
         interface TriggerName {
             String TRIGGER_QUERY_LIST = "triggerQueryList";
+            String TRIGGER_BALANCE_INFO = "triggerBalanceInfo";
         }
 
         interface JobDetailName {
             String JOB_DETAIL_QUERY_LIST = "jobDetailQueryList";
+            String JOB_DETAIL_BALANCE_INFO = "jobDetailBalanceInfo";
         }
     }
 

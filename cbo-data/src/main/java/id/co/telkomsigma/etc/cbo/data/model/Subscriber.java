@@ -20,168 +20,59 @@ public class Subscriber extends AAuditTrail {
      */
     private static final long serialVersionUID = -7599323531722689074L;
 
-    @Column(name = "service_no", unique = true)
     private String serviceNo;
-
-    @Column(name = "subscription_name")
     private String subscriptionName;
-
-    @Column(name = "customer_account_id")
     private Double customerAccountId;
-
-    @Column(name = "p_service_type_id")
     private Integer pServiceTypeId;
-
-    @Column(name = "qty_sub_from")
     private Integer qtySubFrom;
-
-    @Column(name = "qty_sub_to")
     private Integer qtySubTo;
-
-    @Column(name = "p_tariff_scenario_id")
     private Integer pTariffScenarioId;
-
-    @Column(name = "p_bill_cycle_id")
     private Integer pBillCycleId;
-
-    @Column(name = "p_subscription_status_id")
     private Integer pSubscriptionStatusId;
-
-    @Column(name = "last_status_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date lastStatusDate;
-
-    @Column(name = "is_invoiced")
     private Character isInvoice;
-
-    @Column(name = "p_subscriber_segment_id")
     private Integer pSubscriberSegmentId;
-
-    @Column(name = "is_vat_exception")
     private Character isVatException;
-
-    @Column(name = "p_billing_period_unit_id")
     private Integer pBillingPeriodUnitId;
-
-    @Column(name = "billing_unit")
     private Integer billingUnit;
-
-    @Column(name = "subscription_type_id")
     private Integer subscriptionTypeId;
-
-    @Column(name = "building_type_id")
     private Integer buildingTypeId;
-
-    @Column(name = "building_status_id")
     private Integer buildingStatusId;
-
-    @Column(name = "p_sales_person_id")
     private Integer pSalesPersonId;
-
-    @Column(name = "address_1")
     private String address1;
-
-    @Column(name = "address_2")
     private String address2;
-
-    @Column(name = "address_3")
     private String address3;
-
-    @Column(name = "p_region_id")
     private Integer pRegionId;
-
-    @Column(name = "zip_code")
     private Integer zipCode;
-
-    @Column(name = "active_date", unique = true)
-    @Temporal(TemporalType.TIMESTAMP)
     private Date activeDate;
-
-    @Column(name = "termination_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date terminationDate;
-
-    @Column(name = "start_invoice_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date startInvoiceDate;
-
-    @Column(name = "end_invoice_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date endInvoiceDate;
-
-    @Column(name = "contract_number")
     private String contractNumber;
-
-    @Column(name = "em_degree")
     private Integer emDegree;
-
-    @Column(name = "em_minute")
     private Integer emMinute;
-
-    @Column(name = "em_second")
     private Integer emSecond;
-
-    @Column(name = "sl_degree")
     private Integer slDegree;
-
-    @Column(name = "sl_minute")
     private Integer slMinute;
-
-    @Column(name = "sl_second")
     private Integer slSecond;
-
-    @Column(name = "creation_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
-
-    @Column(name = "update_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedate;
-
-    @Column(name = "update_by")
     private String updateBy;
-
-    @Column(name = "p_business_area_id")
     private Integer pBusinessAreaId;
-
-    @Column(name = "p_sub_business_area_id")
     private Integer pSubBusinessAreaId;
-
-    @Column(name = "description")
     private String description;
-
-    @Column(name = "p_service_group_id")
     private Integer pServiceGroupId;
-
-    @Column(name = "re_activation_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date reActivationDate;
-
-    @Column(name = "is_payment_key")
     private String isPaymentKey;
-
-    @Column(name = "p_customer_segment_id")
     private Integer pCustomerSegmentId;
-
-    @Column(name = "p_business_segment_id")
     private Integer pBusinessSegmentId;
-
-    @Column(name = "p_debtor_segment_id")
     private Integer pDebtorSegmentId;
-
-    @Column(name = "last_balance")
     private BigDecimal lastBalance;
-
-    @Column(name = "last_balance_date")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date lastBalanceDate;
-
-    @Column(name = "current_balance")
     private BigDecimal currentBalance;
-
-    @Column(name = "e_money_id")
     private String eMoneyId;
 
+    @Column(name = "service_no", unique = true)
     public String getServiceNo() {
         return serviceNo;
     }
@@ -190,6 +81,7 @@ public class Subscriber extends AAuditTrail {
         this.serviceNo = serviceNo;
     }
 
+    @Column(name = "subscription_name")
     public String getSubscriptionName() {
         return subscriptionName;
     }
@@ -198,6 +90,7 @@ public class Subscriber extends AAuditTrail {
         this.subscriptionName = subscriptionName;
     }
 
+    @Column(name = "customer_account_id")
     public Double getCustomerAccountId() {
         return customerAccountId;
     }
@@ -206,6 +99,7 @@ public class Subscriber extends AAuditTrail {
         this.customerAccountId = customerAccountId;
     }
 
+    @Column(name = "p_service_type_id")
     public Integer getpServiceTypeId() {
         return pServiceTypeId;
     }
@@ -214,6 +108,7 @@ public class Subscriber extends AAuditTrail {
         this.pServiceTypeId = pServiceTypeId;
     }
 
+    @Column(name = "qty_sub_from")
     public Integer getQtySubFrom() {
         return qtySubFrom;
     }
@@ -222,6 +117,7 @@ public class Subscriber extends AAuditTrail {
         this.qtySubFrom = qtySubFrom;
     }
 
+    @Column(name = "qty_sub_to")
     public Integer getQtySubTo() {
         return qtySubTo;
     }
@@ -230,6 +126,7 @@ public class Subscriber extends AAuditTrail {
         this.qtySubTo = qtySubTo;
     }
 
+    @Column(name = "p_tariff_scenario_id")
     public Integer getpTariffScenarioId() {
         return pTariffScenarioId;
     }
@@ -238,6 +135,7 @@ public class Subscriber extends AAuditTrail {
         this.pTariffScenarioId = pTariffScenarioId;
     }
 
+    @Column(name = "p_bill_cycle_id")
     public Integer getpBillCycleId() {
         return pBillCycleId;
     }
@@ -246,6 +144,7 @@ public class Subscriber extends AAuditTrail {
         this.pBillCycleId = pBillCycleId;
     }
 
+    @Column(name = "p_subscription_status_id")
     public Integer getpSubscriptionStatusId() {
         return pSubscriptionStatusId;
     }
@@ -254,6 +153,8 @@ public class Subscriber extends AAuditTrail {
         this.pSubscriptionStatusId = pSubscriptionStatusId;
     }
 
+    @Column(name = "last_status_date")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastStatusDate() {
         return lastStatusDate;
     }
@@ -262,6 +163,7 @@ public class Subscriber extends AAuditTrail {
         this.lastStatusDate = lastStatusDate;
     }
 
+    @Column(name = "is_invoiced")
     public Character getIsInvoice() {
         return isInvoice;
     }
@@ -270,6 +172,7 @@ public class Subscriber extends AAuditTrail {
         this.isInvoice = isInvoice;
     }
 
+    @Column(name = "p_subscriber_segment_id")
     public Integer getpSubscriberSegmentId() {
         return pSubscriberSegmentId;
     }
@@ -278,6 +181,7 @@ public class Subscriber extends AAuditTrail {
         this.pSubscriberSegmentId = pSubscriberSegmentId;
     }
 
+    @Column(name = "is_vat_exception")
     public Character getIsVatException() {
         return isVatException;
     }
@@ -286,6 +190,7 @@ public class Subscriber extends AAuditTrail {
         this.isVatException = isVatException;
     }
 
+    @Column(name = "p_billing_period_unit_id")
     public Integer getpBillingPeriodUnitId() {
         return pBillingPeriodUnitId;
     }
@@ -294,6 +199,7 @@ public class Subscriber extends AAuditTrail {
         this.pBillingPeriodUnitId = pBillingPeriodUnitId;
     }
 
+    @Column(name = "billing_unit")
     public Integer getBillingUnit() {
         return billingUnit;
     }
@@ -302,6 +208,7 @@ public class Subscriber extends AAuditTrail {
         this.billingUnit = billingUnit;
     }
 
+    @Column(name = "subscription_type_id")
     public Integer getSubscriptionTypeId() {
         return subscriptionTypeId;
     }
@@ -310,6 +217,7 @@ public class Subscriber extends AAuditTrail {
         this.subscriptionTypeId = subscriptionTypeId;
     }
 
+    @Column(name = "building_type_id")
     public Integer getBuildingTypeId() {
         return buildingTypeId;
     }
@@ -318,6 +226,7 @@ public class Subscriber extends AAuditTrail {
         this.buildingTypeId = buildingTypeId;
     }
 
+    @Column(name = "building_status_id")
     public Integer getBuildingStatusId() {
         return buildingStatusId;
     }
@@ -326,6 +235,7 @@ public class Subscriber extends AAuditTrail {
         this.buildingStatusId = buildingStatusId;
     }
 
+    @Column(name = "p_sales_person_id")
     public Integer getpSalesPersonId() {
         return pSalesPersonId;
     }
@@ -334,6 +244,7 @@ public class Subscriber extends AAuditTrail {
         this.pSalesPersonId = pSalesPersonId;
     }
 
+    @Column(name = "address_1")
     public String getAddress1() {
         return address1;
     }
@@ -342,6 +253,7 @@ public class Subscriber extends AAuditTrail {
         this.address1 = address1;
     }
 
+    @Column(name = "address_2")
     public String getAddress2() {
         return address2;
     }
@@ -350,6 +262,7 @@ public class Subscriber extends AAuditTrail {
         this.address2 = address2;
     }
 
+    @Column(name = "address_3")
     public String getAddress3() {
         return address3;
     }
@@ -358,6 +271,7 @@ public class Subscriber extends AAuditTrail {
         this.address3 = address3;
     }
 
+    @Column(name = "p_region_id")
     public Integer getpRegionId() {
         return pRegionId;
     }
@@ -366,6 +280,7 @@ public class Subscriber extends AAuditTrail {
         this.pRegionId = pRegionId;
     }
 
+    @Column(name = "zip_code")
     public Integer getZipCode() {
         return zipCode;
     }
@@ -374,6 +289,8 @@ public class Subscriber extends AAuditTrail {
         this.zipCode = zipCode;
     }
 
+    @Column(name = "active_date", unique = true)
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getActiveDate() {
         return activeDate;
     }
@@ -382,6 +299,8 @@ public class Subscriber extends AAuditTrail {
         this.activeDate = activeDate;
     }
 
+    @Column(name = "termination_date")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getTerminationDate() {
         return terminationDate;
     }
@@ -390,6 +309,8 @@ public class Subscriber extends AAuditTrail {
         this.terminationDate = terminationDate;
     }
 
+    @Column(name = "start_invoice_date")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getStartInvoiceDate() {
         return startInvoiceDate;
     }
@@ -398,6 +319,8 @@ public class Subscriber extends AAuditTrail {
         this.startInvoiceDate = startInvoiceDate;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "end_invoice_date")
     public Date getEndInvoiceDate() {
         return endInvoiceDate;
     }
@@ -406,6 +329,7 @@ public class Subscriber extends AAuditTrail {
         this.endInvoiceDate = endInvoiceDate;
     }
 
+    @Column(name = "contract_number")
     public String getContractNumber() {
         return contractNumber;
     }
@@ -414,6 +338,7 @@ public class Subscriber extends AAuditTrail {
         this.contractNumber = contractNumber;
     }
 
+    @Column(name = "em_degree")
     public Integer getEmDegree() {
         return emDegree;
     }
@@ -422,6 +347,7 @@ public class Subscriber extends AAuditTrail {
         this.emDegree = emDegree;
     }
 
+    @Column(name = "em_minute")
     public Integer getEmMinute() {
         return emMinute;
     }
@@ -430,6 +356,7 @@ public class Subscriber extends AAuditTrail {
         this.emMinute = emMinute;
     }
 
+    @Column(name = "em_second")
     public Integer getEmSecond() {
         return emSecond;
     }
@@ -438,6 +365,7 @@ public class Subscriber extends AAuditTrail {
         this.emSecond = emSecond;
     }
 
+    @Column(name = "sl_degree")
     public Integer getSlDegree() {
         return slDegree;
     }
@@ -446,6 +374,7 @@ public class Subscriber extends AAuditTrail {
         this.slDegree = slDegree;
     }
 
+    @Column(name = "sl_minute")
     public Integer getSlMinute() {
         return slMinute;
     }
@@ -454,6 +383,7 @@ public class Subscriber extends AAuditTrail {
         this.slMinute = slMinute;
     }
 
+    @Column(name = "sl_second")
     public Integer getSlSecond() {
         return slSecond;
     }
@@ -462,6 +392,8 @@ public class Subscriber extends AAuditTrail {
         this.slSecond = slSecond;
     }
 
+    @Column(name = "creation_date")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getCreationDate() {
         return creationDate;
     }
@@ -470,6 +402,8 @@ public class Subscriber extends AAuditTrail {
         this.creationDate = creationDate;
     }
 
+    @Column(name = "update_date")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getUpdatedate() {
         return updatedate;
     }
@@ -478,6 +412,7 @@ public class Subscriber extends AAuditTrail {
         this.updatedate = updatedate;
     }
 
+    @Column(name = "update_by")
     public String getUpdateBy() {
         return updateBy;
     }
@@ -486,6 +421,7 @@ public class Subscriber extends AAuditTrail {
         this.updateBy = updateBy;
     }
 
+    @Column(name = "p_business_area_id")
     public Integer getpBusinessAreaId() {
         return pBusinessAreaId;
     }
@@ -494,6 +430,7 @@ public class Subscriber extends AAuditTrail {
         this.pBusinessAreaId = pBusinessAreaId;
     }
 
+    @Column(name = "p_sub_business_area_id")
     public Integer getpSubBusinessAreaId() {
         return pSubBusinessAreaId;
     }
@@ -502,6 +439,7 @@ public class Subscriber extends AAuditTrail {
         this.pSubBusinessAreaId = pSubBusinessAreaId;
     }
 
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -510,6 +448,7 @@ public class Subscriber extends AAuditTrail {
         this.description = description;
     }
 
+    @Column(name = "p_service_group_id")
     public Integer getpServiceGroupId() {
         return pServiceGroupId;
     }
@@ -518,6 +457,8 @@ public class Subscriber extends AAuditTrail {
         this.pServiceGroupId = pServiceGroupId;
     }
 
+    @Column(name = "re_activation_date")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getReActivationDate() {
         return reActivationDate;
     }
@@ -526,6 +467,7 @@ public class Subscriber extends AAuditTrail {
         this.reActivationDate = reActivationDate;
     }
 
+    @Column(name = "is_payment_key")
     public String getIsPaymentKey() {
         return isPaymentKey;
     }
@@ -534,6 +476,7 @@ public class Subscriber extends AAuditTrail {
         this.isPaymentKey = isPaymentKey;
     }
 
+    @Column(name = "p_customer_segment_id")
     public Integer getpCustomerSegmentId() {
         return pCustomerSegmentId;
     }
@@ -542,6 +485,7 @@ public class Subscriber extends AAuditTrail {
         this.pCustomerSegmentId = pCustomerSegmentId;
     }
 
+    @Column(name = "p_business_segment_id")
     public Integer getpBusinessSegmentId() {
         return pBusinessSegmentId;
     }
@@ -550,6 +494,7 @@ public class Subscriber extends AAuditTrail {
         this.pBusinessSegmentId = pBusinessSegmentId;
     }
 
+    @Column(name = "p_debtor_segment_id")
     public Integer getpDebtorSegmentId() {
         return pDebtorSegmentId;
     }
@@ -558,6 +503,7 @@ public class Subscriber extends AAuditTrail {
         this.pDebtorSegmentId = pDebtorSegmentId;
     }
 
+    @Column(name = "last_balance")
     public BigDecimal getLastBalance() {
         return lastBalance;
     }
@@ -566,6 +512,8 @@ public class Subscriber extends AAuditTrail {
         this.lastBalance = lastBalance;
     }
 
+    @Column(name = "last_balance_date")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getLastBalanceDate() {
         return lastBalanceDate;
     }
@@ -574,6 +522,7 @@ public class Subscriber extends AAuditTrail {
         this.lastBalanceDate = lastBalanceDate;
     }
 
+    @Column(name = "current_balance")
     public BigDecimal getCurrentBalance() {
         return currentBalance;
     }
@@ -582,6 +531,7 @@ public class Subscriber extends AAuditTrail {
         this.currentBalance = currentBalance;
     }
 
+    @Column(name = "e_money_id")
     public String geteMoneyId() {
         return eMoneyId;
     }
@@ -593,5 +543,12 @@ public class Subscriber extends AAuditTrail {
     @Override
     public String tableName() {
         return "subscriber";
+    }
+
+    @Override
+    public String toString() {
+        return "Subscriber{" +
+                "currentBalance=" + currentBalance +
+                '}';
     }
 }

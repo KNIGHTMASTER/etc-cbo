@@ -15,9 +15,9 @@ import javax.annotation.PostConstruct;
  *
  */
 @Component
-public class BalanceInfoListQueryV2Client extends ARestClient<ResponseChargeProcessStatusDTO, RequestQueryListDTO> {
+public class ListQueryV2Client extends ARestClient<ResponseChargeProcessStatusDTO, RequestQueryListDTO> {
 
-    @Value("${api.mock.balanceinfo}")
+    @Value("${api.mock.querylist}")
     String mockBalanceInfo;
 
     @PostConstruct

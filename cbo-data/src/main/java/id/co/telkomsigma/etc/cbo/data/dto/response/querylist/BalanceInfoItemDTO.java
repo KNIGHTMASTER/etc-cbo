@@ -1,4 +1,4 @@
-package id.co.telkomsigma.etc.cbo.data.dto.response.balanceinfo;
+package id.co.telkomsigma.etc.cbo.data.dto.response.querylist;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
-public class BalanceInfoQueryListItemDTO implements Serializable {
+public class BalanceInfoItemDTO implements Serializable {
     /**
      *
      *
@@ -47,5 +47,14 @@ public class BalanceInfoQueryListItemDTO implements Serializable {
 
     public void setBalanceQueriedAt(Date balanceQueriedAt) {
         this.balanceQueriedAt = balanceQueriedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "BalanceInfoItemDTO{" +
+                "accountId='" + accountId + '\'' +
+                ", balanceAmount=" + balanceAmount +
+                ", balanceQueriedAt=" + balanceQueriedAt +
+                '}';
     }
 }

@@ -45,6 +45,9 @@ public class CboTransactionJMSConfig {
     @Value("${jms.listener.statuslist.concurrency.size}")
     String statusListConcurrencySize;
 
+    @Value("${jms.listener.blacklist.concurrency.size}")
+    String blackListConcurrencySize;
+
     @Bean
     public ActiveMQConnectionFactory activeMQConnectionFactory(){
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(activeMQBrokerUrl);
@@ -73,6 +76,15 @@ public class CboTransactionJMSConfig {
         configurer.configure(factory, connectionFactory);
         factory.setPubSubDomain(true);
         factory.setConcurrency(statusListConcurrencySize);
+        return factory;
+    }
+
+    @Bean
+    public DefaultJmsListenerContainerFactory jmsBlackListTopicConnectionFactory(ConnectionFactory connectionFactory, DefaultJmsListenerContainerFactoryConfigurer configurer) {
+        DefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();
+        configurer.configure(factory, connectionFactory);
+        factory.setPubSubDomain(true);
+        factory.setConcurrency(blackListConcurrencySize);
         return factory;
     }
 

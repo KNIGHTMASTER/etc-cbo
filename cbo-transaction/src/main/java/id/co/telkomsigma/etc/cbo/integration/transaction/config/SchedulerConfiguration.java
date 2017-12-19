@@ -4,7 +4,8 @@ import id.co.telkomsigma.etc.cbo.integration.transaction.ICBOTransactionConstant
 import id.co.telkomsigma.etc.cbo.integration.transaction.ICBOTransactionConstant.Scheduler;
 import id.co.telkomsigma.etc.cbo.integration.transaction.ICBOTransactionConstant.Scheduler.JobDetailName;
 import id.co.telkomsigma.etc.cbo.integration.transaction.ICBOTransactionConstant.Scheduler.TriggerName;
-import id.co.telkomsigma.etc.cbo.integration.transaction.scheduler.SchedulerBalanceInfoQueryListLauncher;
+import id.co.telkomsigma.etc.cbo.integration.transaction.scheduler.SchedulerBalanceInfoLauncher;
+import id.co.telkomsigma.etc.cbo.integration.transaction.scheduler.SchedulerQueryListLauncher;
 import id.co.telkomsigma.tmf.batch.AutowiringSpringBeanJobFactory;
 import org.quartz.CronTrigger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class SchedulerConfiguration {
     @Value("${quartz.cron.expression.query.list}")
     private String cronExpressionQueryList;
 
+    @Value("${quartz.cron.expression.balance.info}")
+    private String cronExpressionBalanceInfo;
+
     /*============================================================================*/
     /*JOB DETAIL BLOCK*/
     /*============================================================================*/
@@ -45,7 +49,18 @@ public class SchedulerConfiguration {
     public JobDetailFactoryBean jobDetailQueryList() {
         JobDetailFactoryBean jobDetail = new JobDetailFactoryBean();
         jobDetail.setBeanName(JobDetailName.JOB_DETAIL_QUERY_LIST);
-        jobDetail.setJobClass(SchedulerBalanceInfoQueryListLauncher.class);
+        jobDetail.setJobClass(SchedulerQueryListLauncher.class);
+        jobDetail.setApplicationContext(applicationContext);
+        jobDetail.setDurability(true);
+        jobDetail.afterPropertiesSet();
+        return jobDetail;
+    }
+
+    @Bean
+    public JobDetailFactoryBean jobDetailBalanceInfo() {
+        JobDetailFactoryBean jobDetail = new JobDetailFactoryBean();
+        jobDetail.setBeanName(JobDetailName.JOB_DETAIL_BALANCE_INFO);
+        jobDetail.setJobClass(SchedulerBalanceInfoLauncher.class);
         jobDetail.setApplicationContext(applicationContext);
         jobDetail.setDurability(true);
         jobDetail.afterPropertiesSet();
@@ -61,6 +76,16 @@ public class SchedulerConfiguration {
         cronTriggerBean.setBeanName(TriggerName.TRIGGER_QUERY_LIST);
         cronTriggerBean.setJobDetail(jobDetailQueryList().getObject());
         cronTriggerBean.setCronExpression(cronExpressionQueryList);
+        cronTriggerBean.afterPropertiesSet();
+        return cronTriggerBean.getObject();
+    }
+
+    @Bean
+    public CronTrigger triggerBalanceInfo() throws Exception {
+        CronTriggerFactoryBean cronTriggerBean = new CronTriggerFactoryBean();
+        cronTriggerBean.setBeanName(TriggerName.TRIGGER_BALANCE_INFO);
+        cronTriggerBean.setJobDetail(jobDetailBalanceInfo().getObject());
+        cronTriggerBean.setCronExpression(cronExpressionBalanceInfo);
         cronTriggerBean.afterPropertiesSet();
         return cronTriggerBean.getObject();
     }
@@ -84,6 +109,29 @@ public class SchedulerConfiguration {
         factory.setApplicationContext(applicationContext);
 
         factory.setTriggers(triggerQueryList());
+        factory.setJobFactory(new SpringBeanJobFactory());
+
+        factory.afterPropertiesSet();
+
+        return factory;
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = "scheduler.balanceinfo.enabled", havingValue = "true", matchIfMissing = true)
+    public SchedulerFactoryBean schedulerBalanceInfo() throws Exception {
+        SchedulerFactoryBean factory = new SchedulerFactoryBean();
+        factory.setTransactionManager(transactionManager);
+        factory.setOverwriteExistingJobs(true);
+        factory.setSchedulerName(Scheduler.Name.SCHEDULER_BALANCE_INFO);
+
+        AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
+        jobFactory.setApplicationContext(applicationContext);
+        factory.setJobFactory(jobFactory);
+
+        factory.setApplicationContextSchedulerContextKey(ApplicationContextName.APPLICATION_CONTEXT_SCHEDULER);
+        factory.setApplicationContext(applicationContext);
+
+        factory.setTriggers(triggerBalanceInfo());
         factory.setJobFactory(new SpringBeanJobFactory());
 
         factory.afterPropertiesSet();

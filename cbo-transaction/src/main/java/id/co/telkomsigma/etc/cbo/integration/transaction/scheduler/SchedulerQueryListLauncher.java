@@ -1,7 +1,7 @@
 package id.co.telkomsigma.etc.cbo.integration.transaction.scheduler;
 
 import id.co.telkomsigma.etc.cbo.integration.transaction.ICBOTransactionConstant.ApplicationContextName;
-import id.co.telkomsigma.etc.cbo.integration.transaction.service.IBalanceInfoQueryListService;
+import id.co.telkomsigma.etc.cbo.integration.transaction.service.IQueryListService;
 import id.co.telkomsigma.tmf.batch.ASchedulerLauncher;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Component;
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Component
-public class SchedulerBalanceInfoQueryListLauncher extends ASchedulerLauncher {
+public class SchedulerQueryListLauncher extends ASchedulerLauncher {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerBalanceInfoQueryListLauncher.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchedulerQueryListLauncher.class);
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -29,8 +29,8 @@ public class SchedulerBalanceInfoQueryListLauncher extends ASchedulerLauncher {
         } catch (SchedulerException e) {
             LOGGER.error("Error injection application context ".concat(e.toString()));
         }
-        LOGGER.info("Balance Info Query List Scheduler Started");
-        IBalanceInfoQueryListService balanceInfoQueryListService = appCtx.getBean(IBalanceInfoQueryListService.class);
+        LOGGER.info("Query List Scheduler Started");
+        IQueryListService balanceInfoQueryListService = appCtx.getBean(IQueryListService.class);
         balanceInfoQueryListService.conductV2();
     }
 }

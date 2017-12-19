@@ -1,6 +1,7 @@
 package id.co.telkomsigma.etc.cbo.integration.transaction.service;
 
 import id.co.telkomsigma.etc.cbo.data.model.Subscriber;
+import id.co.telkomsigma.tmf.service.exception.ServiceException;
 import id.co.telkomsigma.tmf.service.scaffolding.IScaffoldingService;
 
 /**
@@ -13,4 +14,8 @@ public interface ISubscriberService extends IScaffoldingService<Subscriber> {
     String findServiceNumberByPan(String p_Pan);
 
     Long countByServiceNo(String p_ServiceNo);
+
+    Subscriber findByServiceNo(String p_ServiceNo);
+
+    String findPanByServiceNo(String p_ServiceNo) throws ServiceException;
 }

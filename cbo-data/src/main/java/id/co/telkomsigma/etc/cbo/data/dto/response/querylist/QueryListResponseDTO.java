@@ -1,4 +1,4 @@
-package id.co.telkomsigma.etc.cbo.data.dto.response.balanceinfo;
+package id.co.telkomsigma.etc.cbo.data.dto.response.querylist;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,22 +9,22 @@ import java.io.Serializable;
  *
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
-public class BalanceInfoQueryListResponseDTO implements Serializable {
+public class QueryListResponseDTO implements Serializable {
     /**
      *
      *
      */
     private static final long serialVersionUID = -2589395257306891876L;
 
-    private BalanceInfoQueryListContentDTO data;
+    private QueryListContentDTO data;
     private String error;
 
     @JsonProperty("data")
-    public BalanceInfoQueryListContentDTO getData() {
+    public QueryListContentDTO getData() {
         return data;
     }
 
-    public void setData(BalanceInfoQueryListContentDTO data) {
+    public void setData(QueryListContentDTO data) {
         this.data = data;
     }
 

@@ -1,7 +1,7 @@
 package id.co.telkomsigma.etc.cbo.data.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import id.co.telkomsigma.etc.cbo.data.dto.response.balanceinfo.BalanceInfoQueryListItemDTO;
+import id.co.telkomsigma.etc.cbo.data.dto.response.querylist.BalanceInfoItemDTO;
 
 import java.io.Serializable;
 
@@ -23,7 +23,7 @@ public class ChargeProsesStatusContentDTO implements Serializable {
     private String resultCode;
     private String startDate;
     private String transferDate;
-    private BalanceInfoQueryListItemDTO balanceInfo;
+    private BalanceInfoItemDTO balanceInfo;
 
     @JsonProperty("ExternalId")
     public String getExternalId() {
@@ -80,11 +80,11 @@ public class ChargeProsesStatusContentDTO implements Serializable {
     }
 
     @JsonProperty("BalanceInfo")
-    public BalanceInfoQueryListItemDTO getBalanceInfo() {
+    public BalanceInfoItemDTO getBalanceInfo() {
         return balanceInfo;
     }
 
-    public void setBalanceInfo(BalanceInfoQueryListItemDTO balanceInfo) {
+    public void setBalanceInfo(BalanceInfoItemDTO balanceInfo) {
         this.balanceInfo = balanceInfo;
     }
 }
