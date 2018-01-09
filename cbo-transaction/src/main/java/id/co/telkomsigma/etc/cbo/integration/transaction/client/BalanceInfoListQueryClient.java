@@ -15,7 +15,7 @@ import javax.annotation.PostConstruct;
 @Component
 public class BalanceInfoListQueryClient extends ARestClient<BalanceInfoResponseDTO, Object> {
 
-    @Value("${api.mock.balanceinfo}")
+    @Value("${api.cellum.balanceinfo}")
     private String balanceInfoUrl;
 
     @PostConstruct

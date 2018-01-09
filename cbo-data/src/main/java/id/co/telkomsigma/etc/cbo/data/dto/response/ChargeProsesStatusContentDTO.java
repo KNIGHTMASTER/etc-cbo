@@ -87,4 +87,17 @@ public class ChargeProsesStatusContentDTO implements Serializable {
     public void setBalanceInfo(BalanceInfoItemDTO balanceInfo) {
         this.balanceInfo = balanceInfo;
     }
+
+    @Override
+    public String toString() {
+        return "ChargeProsesStatusContentDTO{" +
+                "externalId='" + externalId + '\'' +
+                ", cmnId='" + cmnId + '\'' +
+                ", processStatus='" + processStatus + '\'' +
+                ", resultCode='" + resultCode + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", transferDate='" + transferDate + '\'' +
+                ", balanceInfo=" + balanceInfo +
+                '}';
+    }
 }

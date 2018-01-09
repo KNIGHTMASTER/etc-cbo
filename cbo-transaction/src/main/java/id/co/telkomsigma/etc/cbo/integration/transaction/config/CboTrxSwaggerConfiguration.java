@@ -1,45 +1,17 @@
 package id.co.telkomsigma.etc.cbo.integration.transaction.config;
 
-import com.google.common.collect.Lists;
-import id.co.telkomsigma.etc.cbo.data.CBOConstant;
-import id.co.telkomsigma.tmf.data.constant.TMFConstant;
-import id.co.telkomsigma.tmf.security.provider.SigmaBasicAuthenticationEntryPoint;
-import id.co.telkomsigma.tmf.security.service.SigmaUserDetailsService;
-import id.co.telkomsigma.tmf.security.util.JwtTokenUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.mobile.device.Device;
-import org.springframework.mobile.device.DevicePlatform;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.*;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spi.service.contexts.SecurityContext;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger.web.ApiKeyVehicle;
-import springfox.documentation.swagger.web.SecurityConfiguration;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created on 7/27/17.
  *
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
-@Configuration
+/*@Configuration
 @ComponentScan(basePackages = {CBOConstant.PackageScanner.Cbo.COMPONENT_CBO, CBOConstant.PackageScanner.Tmf.COMPONENT_TMF})
 @EnableSwagger2
-@Order(5)
+@Order(5)*/
 public class CboTrxSwaggerConfiguration {
 
-    @Value("${jwt.header}")
+/*    @Value("${jwt.header}")
     String jwtHeader;
 
     @Autowired
@@ -182,7 +154,7 @@ public class CboTrxSwaggerConfiguration {
         authorizationScopes[0] = authorizationScope;
         return Lists.newArrayList(
                 new SecurityReference("AUTHORIZATION", authorizationScopes));
-    }
+    }*/
 
     /*private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth())

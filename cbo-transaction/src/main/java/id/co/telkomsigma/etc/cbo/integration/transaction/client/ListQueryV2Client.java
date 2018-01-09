@@ -17,13 +17,13 @@ import javax.annotation.PostConstruct;
 @Component
 public class ListQueryV2Client extends ARestClient<ResponseChargeProcessStatusDTO, RequestQueryListDTO> {
 
-    @Value("${api.mock.querylist}")
-    String mockBalanceInfo;
+    @Value("${api.cellum.chargestatusquery}")
+    String queryListUrl;
 
     @PostConstruct
     @Override
     public void init() {
-        super.urlTarget = mockBalanceInfo;
+        super.urlTarget = queryListUrl;
     }
 
 

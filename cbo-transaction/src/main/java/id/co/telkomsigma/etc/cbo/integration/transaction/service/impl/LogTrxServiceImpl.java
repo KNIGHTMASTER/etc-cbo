@@ -1,8 +1,8 @@
 package id.co.telkomsigma.etc.cbo.integration.transaction.service.impl;
 
-import id.co.telkomsigma.etc.cbo.dao.IEventRatedDAO;
-import id.co.telkomsigma.etc.cbo.data.model.EventRated;
-import id.co.telkomsigma.etc.cbo.integration.transaction.service.IEventRatedService;
+import id.co.telkomsigma.etc.cbo.dao.ILogTrxDAO;
+import id.co.telkomsigma.etc.cbo.data.model.LogTrx;
+import id.co.telkomsigma.etc.cbo.integration.transaction.service.ILogTrxService;
 import id.co.telkomsigma.tmf.service.crud.ACrudService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 /**
- * Created on 11/7/17.
+ * Created on 1/5/18.
  *
  * @author <a href="mailto:fauzi.knightmaster.achmad@gmail.com">Achmad Fauzi</a>
  */
 @Service
-public class EventRatedServiceImpl extends ACrudService<EventRated> implements IEventRatedService {
+public class LogTrxServiceImpl extends ACrudService<LogTrx> implements ILogTrxService {
 
     @Autowired
-    private IEventRatedDAO eventRatedDAO;
+    private ILogTrxDAO logTrxDAO;
 
     @PostConstruct
     @Override
     public void init() {
-        scaffoldingDAO = eventRatedDAO;
+        scaffoldingDAO = logTrxDAO;
     }
 }

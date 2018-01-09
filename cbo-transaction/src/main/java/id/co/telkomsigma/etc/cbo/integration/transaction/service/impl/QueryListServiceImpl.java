@@ -15,7 +15,6 @@ import id.co.telkomsigma.etc.cbo.integration.transaction.client.ListQueryV2Clien
 import id.co.telkomsigma.etc.cbo.integration.transaction.service.*;
 import id.co.telkomsigma.etc.cbo.integration.transaction.topic.StatusListTopicProducer;
 import id.co.telkomsigma.etc.cbo.shared.data.StatusListContentDTO;
-import id.co.telkomsigma.etc.cbo.shared.data.StatusListDTO;
 import id.co.telkomsigma.tmf.data.constant.TMFConstant.Common.Punctuation;
 import id.co.telkomsigma.tmf.service.exception.ServiceException;
 import org.slf4j.Logger;
@@ -71,6 +70,9 @@ public class QueryListServiceImpl implements IQueryListService {
     @Autowired
     private StatusListTopicProducer statusListTopicProducer;
 
+    @Autowired
+    private ILogTrxService logTrxService;
+
     private static final Logger LOGGER = LoggerFactory.getLogger(QueryListServiceImpl.class);
 
     @Override
@@ -89,7 +91,7 @@ public class QueryListServiceImpl implements IQueryListService {
             result = logHitOther.getId();
         }else if (p_FlagStatus.equals(Query.FLAG_STATUS_HIT_UPDATE)) {
             if (p_IdLog != null) {
-                LogHitOther toUpdateLogHit = null;
+                LogHitOther toUpdateLogHit;
                 try {
                     toUpdateLogHit = logHitOtherService.findById(p_IdLog);
                     if (toUpdateLogHit != null) {
@@ -172,8 +174,10 @@ public class QueryListServiceImpl implements IQueryListService {
     @Override
     public void conductV2() {
         List<EventInput> eventInputs;
+        LogTrx logTrx = new LogTrx();
         try {
             eventInputs = eventInputService.findByIsHit(ICBOTransactionConstant.IsHitEventInput.BATCH_START);
+            LOGGER.info("Event Input Size "+eventInputs.size());
             if (eventInputs.size() > 0) {
 
                 RequestQueryListDTO requestQueryListDTO = new RequestQueryListDTO();
@@ -186,17 +190,30 @@ public class QueryListServiceImpl implements IQueryListService {
                 mvmHeaders.add("Content-Type", "application/json");
 
                 Date timeStampRequestQL = new Date();
+                ObjectMapper mapper = new ObjectMapper();
+                logTrx.setTrxReq(mapper.writeValueAsString(requestQueryListDTO));
+                logTrx.setLogDate(timeStampRequestQL);
+
+                LOGGER.info("Accessing Rest");
                 ResponseChargeProcessStatusDTO responseChargeProcessStatusDTO = listQueryV2Client.queryClient(mvmHeaders, requestQueryListDTO);
                 if (responseChargeProcessStatusDTO.getChargeProcessStatuses() != null) {
                     if (responseChargeProcessStatusDTO.getChargeProcessStatuses().size() > 0) {
-                        StatusListDTO statusListDTO = new StatusListDTO();
+//                        StatusListDTO statusListDTO = new StatusListDTO();
                         List<StatusListContentDTO> statusListContentDTOList = new ArrayList<>();
                         for (ChargeProsesStatusContentDTO content : responseChargeProcessStatusDTO.getChargeProcessStatuses()) {
+                            logTrx.setTbRowId(content.getExternalId());
+                            LOGGER.info("External Id "+content.getExternalId());
                             EventInput processedEI = eventInputService.findByUuidInput(content.getExternalId());
+                            LOGGER.info("process status "+content.getProcessStatus());
+                            LOGGER.info("full json response "+content.toString());
                             if (processedEI != null) {
                                 if (content.getProcessStatus().equals("FailedToStart")){
-                            /*DO Nothing*/
+                                    /*DO Nothing*/
+                                    LOGGER.info("status : failed to start");
+                                    logTrx.setErrorReq(mapper.writeValueAsString(requestQueryListDTO.getExternalIds()));
+                                    logTrx.setUpdateRespon(new Date());
                                 } else if (content.getProcessStatus().equals("FinishedSuccessfully")) {
+                                    LOGGER.info("Status : Finished SuccessFully");
                                     processedEI.setIsHit(ICBOTransactionConstant.IsHitEventInput.QUERY_LIST);
                                     eventInputService.update(processedEI);
                                     //insert event rated
@@ -212,17 +229,25 @@ public class QueryListServiceImpl implements IQueryListService {
                                     eventRated.setTransferDateClm(content.getTransferDate());
                                     eventRatedService.insert(eventRated);
 
+                                    logTrx.setTrxResp(mapper.writeValueAsString(content));
+                                    logTrx.setUpdateRespon(new Date());
+
+                                    /*LOGGER.info("BALANCE TO SEND TOPIC "+content.getBalanceInfo().getBalanceAmount());*/
                                     StatusListContentDTO statusListContentDTO = new StatusListContentDTO();
                                     statusListContentDTO.setRecordType("1");
                                     statusListContentDTO.setPan(processedEI.getPan());
-                                    LOGGER.info("BALANCE TO SEND TOPIC "+content.getBalanceInfo().getBalanceAmount());
                                     statusListContentDTO.setBalance(String.valueOf(content.getBalanceInfo().getBalanceAmount()));
                                     statusListContentDTO.setStatusFlags("0");
                                     statusListContentDTOList.add(statusListContentDTO);
-
                                 } else if (content.getProcessStatus().equals("FinishedFailure")) {
-                                    processedEI.setIsHit(ICBOTransactionConstant.IsHitEventInput.FAILED_CHARGE_BATCH);
-                                    eventInputService.update(processedEI);
+                                    /*processedEI.setIsHit(ICBOTransactionConstant.IsHitEventInput.FAILED_CHARGE_BATCH);
+                                    eventInputService.update(processedEI);*/
+
+                                    LOGGER.info("Status : Finished Failure");
+                                    logTrx.setErrorReq(mapper.writeValueAsString(requestQueryListDTO));
+                                    logTrx.setErrorResp(mapper.writeValueAsString(content));
+                                    logTrx.setUpdateRespon(new Date());
+
                                     //insert event unrated
                                     EventUnRated eventUnRated = new EventUnRated();
                                     eventUnRated.setPan(processedEI.getPan());
@@ -233,11 +258,16 @@ public class QueryListServiceImpl implements IQueryListService {
                                     eventUnRated.setResultCode(content.getResultCode());
                                     eventUnRated.setTrxCmnId(content.getCmnId());
                                     eventUnRatedService.insert(eventUnRated);
+                                    LOGGER.info("Event Unrated : "+eventUnRated.toString());
+                                    LOGGER.info("Insert Event Unrated");
                                 }
                             }
+                            logTrxService.insert(logTrx);
+                            LOGGER.info("Insert LOG Trx");
                         }
 
-                        LOGGER.info("Status List size "+statusListContentDTOList.size());
+                        /*Sending to AMQ*/
+                        /*LOGGER.info("Status List size "+statusListContentDTOList.size());
                         if (statusListContentDTOList.size() > 0){
                             statusListDTO.setContents(statusListContentDTOList);
                             try {
@@ -247,12 +277,12 @@ public class QueryListServiceImpl implements IQueryListService {
                                 LOGGER.error("Messaging Exception occurred ".concat(e.toString()));
                             }
                             LOGGER.info("SCHEDULER HAS SENT STATUS LIST TO TOPIC CONSUMER");
-                        }
+                        }*/
                     }
                 }
             }
         } catch (Exception e) {
-            LOGGER.error("Error selection event inputs ".concat(e.toString()));
+            LOGGER.error("An Error Occured "+e.toString());
         }
 
     }

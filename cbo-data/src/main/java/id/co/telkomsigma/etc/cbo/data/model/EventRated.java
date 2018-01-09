@@ -1,5 +1,7 @@
 package id.co.telkomsigma.etc.cbo.data.model;
 
+import id.co.telkomsigma.tmf.data.model.base.ACrudDATA;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,44 +12,22 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "t_event_rated", schema = "public")
-public class EventRated {
+public class EventRated extends ACrudDATA<Long> {
 
-    @Id
-    @Column(name = "timestamps")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date timestamps;
-
-    @Column(name = "bank_trxid")
     private String bankTrxId;
-
-    @Column(name = "reference_code")
     private String referenceCode;
-
-    @Column(name = "wasrepeated")
     private String wasRepeated;
-
-    @Column(name = "row_id")
     private String rowId;
-
-    @Column(name = "input_data_control_id")
     private Double inputDataControlId;
-
-    @Column(name = "timestamp_proc")
-    @Temporal(TemporalType.TIMESTAMP)
     private Date timestampProc;
-
-    @Column(name = "result_code")
     private String resultCode;
-
-    @Column(name = "balanceinfo")
     private Double balanceInfo;
-
-    @Column(name = "startdate_clm")
     private String startDateClm;
-
-    @Column(name = "transferdate_clm")
     private String transferDateClm;
 
+    @Column(name = "timestamps")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getTimestamps() {
         return timestamps;
     }
@@ -56,6 +36,7 @@ public class EventRated {
         this.timestamps = timestamps;
     }
 
+    @Column(name = "bank_trxid")
     public String getBankTrxId() {
         return bankTrxId;
     }
@@ -64,6 +45,7 @@ public class EventRated {
         this.bankTrxId = bankTrxId;
     }
 
+    @Column(name = "reference_code")
     public String getReferenceCode() {
         return referenceCode;
     }
@@ -72,6 +54,7 @@ public class EventRated {
         this.referenceCode = referenceCode;
     }
 
+    @Column(name = "wasrepeated")
     public String getWasRepeated() {
         return wasRepeated;
     }
@@ -80,6 +63,7 @@ public class EventRated {
         this.wasRepeated = wasRepeated;
     }
 
+    @Column(name = "row_id")
     public String getRowId() {
         return rowId;
     }
@@ -88,6 +72,7 @@ public class EventRated {
         this.rowId = rowId;
     }
 
+    @Column(name = "input_data_control_id")
     public Double getInputDataControlId() {
         return inputDataControlId;
     }
@@ -96,6 +81,8 @@ public class EventRated {
         this.inputDataControlId = inputDataControlId;
     }
 
+    @Column(name = "timestamp_proc")
+    @Temporal(TemporalType.TIMESTAMP)
     public Date getTimestampProc() {
         return timestampProc;
     }
@@ -104,6 +91,7 @@ public class EventRated {
         this.timestampProc = timestampProc;
     }
 
+    @Column(name = "result_code")
     public String getResultCode() {
         return resultCode;
     }
@@ -112,6 +100,7 @@ public class EventRated {
         this.resultCode = resultCode;
     }
 
+    @Column(name = "balanceinfo")
     public Double getBalanceInfo() {
         return balanceInfo;
     }
@@ -120,6 +109,7 @@ public class EventRated {
         this.balanceInfo = balanceInfo;
     }
 
+    @Column(name = "startdate_clm")
     public String getStartDateClm() {
         return startDateClm;
     }
@@ -128,6 +118,7 @@ public class EventRated {
         this.startDateClm = startDateClm;
     }
 
+    @Column(name = "transferdate_clm")
     public String getTransferDateClm() {
         return transferDateClm;
     }
